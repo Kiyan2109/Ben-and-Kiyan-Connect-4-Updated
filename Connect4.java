@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -47,7 +49,23 @@ public class Connect4 {
 
   }
 
+ public void setUp1v1GamePanel() {
+    JComponent _1v1gamePanel = new JPanel(new BorderLayout());
+    _1v1gamePanel.setSize(1300, 1050);
+    _1v1gamePanel.setBackground(Color.WHITE);
+    
+    _1v1gamePanel.setVisible(true);
 
+  }
+
+  public void setUp1vAIGamePanel() {
+    JComponent _1vAIGamePanel = new JPanel(new BorderLayout());
+    _1vAIGamePanel.setSize(1300, 1050);
+    _1vAIGamePanel.setBackground(Color.WHITE);
+    
+    _1vAIGamePanel.setVisible(true);
+
+  }
   public void setUpButtonPanel() {
     buttonPanel = new JPanel(new BorderLayout());
     buttonPanel.setPreferredSize(new Dimension(1300, 500));
@@ -72,6 +90,26 @@ public class Connect4 {
     singlePlayerButton.setOpaque(true);
     singlePlayerButton.setVisible(true);
 
+    //Action Listener so when the single player button is clicked, the corresponding board will open
+    singlePlayerButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent evt) {
+       introPanel.setVisible(false);
+          buttonPanel.setVisible(false);
+          setUp1v1GamePanel();
+        System.out.println("Single Player Button Clicked");
+      }
+    });
+
+    multiPlayerButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent evt) {
+       introPanel.setVisible(false);
+          buttonPanel.setVisible(false);
+          setUp1vAIGamePanel();
+      }
+    });
+
 
     buttonPanel.add(multiPlayerButton, BorderLayout.WEST);
     buttonPanel.add(singlePlayerButton, BorderLayout.EAST);
@@ -79,15 +117,8 @@ public class Connect4 {
   }
 
 
-  //Panel that is created after starting the 1v1 game mode. 
-  public void setUp1v1GamePanel() {
-    JComponent _1v1gamePanel = new JPanel(new BorderLayout());
-    _1v1gamePanel.setSize(1300, 1050);
-    _1v1gamePanel.setBackground(Color.WHITE);
-    
-    _1v1gamePanel.setVisible(true);
-
-  }
+  //Panel that is created after starting the 1v1 game mode. poop 
+ 
 
   // Connect 4 Game Board Creation
   char [][] board = new char[6][7];

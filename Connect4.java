@@ -40,13 +40,12 @@ public class Connect4 {
     introPanel.setOpaque(true);
     introPanel.setVisible(true);
 
-    welcomeLabel = new JLabel("Welcome to Connect 4 Town");
+    welcomeLabel = new JLabel("CONNECT 4");
     welcomeLabel.setHorizontalAlignment(JLabel.CENTER);
-    welcomeLabel.setFont(new Font("Sans_Serif", Font.BOLD, 30));
+    welcomeLabel.setFont(new Font("ITC Avant Garde Gothic Bold", Font.BOLD, 45));
     introPanel.add(welcomeLabel, BorderLayout.PAGE_START);
 
   }
-
 
   public void setUpButtonPanel() {
     buttonPanel = new JPanel(new BorderLayout());

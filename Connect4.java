@@ -33,23 +33,7 @@ public class Connect4 {
     setUpButtonPanel();
       mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
   }
-
-  // Setting up the intro panel
-  public void setUpIntroPanel() {
-    introPanel = new JPanel(new BorderLayout());
-    introPanel.setPreferredSize(new Dimension(1300, 250));
-    introPanel.setBackground(Color.BLUE);
-    introPanel.setOpaque(true);
-    introPanel.setVisible(true);
-
-    welcomeLabel = new JLabel("Welcome to Connect 4 Town");
-    welcomeLabel.setHorizontalAlignment(JLabel.CENTER);
-    welcomeLabel.setFont(new Font("Sans_Serif", Font.BOLD, 30));
-    introPanel.add(welcomeLabel, BorderLayout.PAGE_START);
-
-  }
-
- public void setUp1v1GamePanel() {
+public void setUp1v1GamePanel() {
     JComponent _1v1gamePanel = new JPanel(new BorderLayout());
     _1v1gamePanel.setSize(1300, 1050);
     _1v1gamePanel.setBackground(Color.WHITE);
@@ -66,6 +50,22 @@ public class Connect4 {
     _1vAIGamePanel.setVisible(true);
 
   }
+  // Setting up the intro panel
+  public void setUpIntroPanel() {
+    introPanel = new JPanel(new BorderLayout());
+    introPanel.setPreferredSize(new Dimension(1300, 250));
+    introPanel.setBackground(Color.BLUE);
+    introPanel.setOpaque(true);
+    introPanel.setVisible(true);
+
+    welcomeLabel = new JLabel("CONNECT 4");
+    welcomeLabel.setHorizontalAlignment(JLabel.CENTER);
+    welcomeLabel.setFont(new Font("ITC Avant Garde Gothic Bold", Font.BOLD, 45));
+    introPanel.add(welcomeLabel, BorderLayout.PAGE_START);
+
+  }
+
+
   public void setUpButtonPanel() {
     buttonPanel = new JPanel(new BorderLayout());
     buttonPanel.setPreferredSize(new Dimension(1300, 500));

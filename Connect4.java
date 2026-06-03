@@ -2,9 +2,12 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -15,9 +18,16 @@ public class Connect4 {
   JFrame mainWindow;
   JPanel introPanel;
   JLabel welcomeLabel;
+  JLabel modeSelect; 
   JButton multiPlayerButton;
   JButton singlePlayerButton;
   JPanel buttonPanel;
+  JComponent _1v1gamePanel; 
+  JComponent _1vAIGamePanel;
+  JLabel horizontalSpacer; 
+  ImageIcon connect4Logo;
+  JLabel logoLabel; 
+  JLabel nameLabel; 
 
   // The classes main constructor method
   public Connect4() {
@@ -34,61 +44,75 @@ public class Connect4 {
       mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
   }
 public void setUp1v1GamePanel() {
-    JComponent _1v1gamePanel = new JPanel(new BorderLayout());
+    _1v1gamePanel = new JPanel(new BorderLayout());
     _1v1gamePanel.setSize(1300, 1050);
-    _1v1gamePanel.setBackground(Color.WHITE);
-    
     _1v1gamePanel.setVisible(true);
 
   }
 
   public void setUp1vAIGamePanel() {
-    JComponent _1vAIGamePanel = new JPanel(new BorderLayout());
+    _1vAIGamePanel = new JPanel(new BorderLayout());
     _1vAIGamePanel.setSize(1300, 1050);
-    _1vAIGamePanel.setBackground(Color.WHITE);
-    
     _1vAIGamePanel.setVisible(true);
 
   }
   // Setting up the intro panel
   public void setUpIntroPanel() {
     introPanel = new JPanel(new BorderLayout());
-    introPanel.setPreferredSize(new Dimension(1300, 250));
-    introPanel.setBackground(Color.BLUE);
+    introPanel.setPreferredSize(new Dimension(1300, 500));
     introPanel.setOpaque(true);
     introPanel.setVisible(true);
 
-    welcomeLabel = new JLabel("CONNECT 4");
+    welcomeLabel = new JLabel("Welcome To");
     welcomeLabel.setHorizontalAlignment(JLabel.CENTER);
     welcomeLabel.setFont(new Font("ITC Avant Garde Gothic Bold", Font.BOLD, 45));
     introPanel.add(welcomeLabel, BorderLayout.PAGE_START);
+
+    modeSelect = new JLabel("Select a game mode:");
+    modeSelect.setHorizontalAlignment(JLabel.CENTER);
+    modeSelect.setFont(new Font("ITC Avant Garde Gothic Bold", Font.BOLD, 30));
+    introPanel.add(modeSelect, BorderLayout.PAGE_END);
+
+    connect4Logo = new ImageIcon("Connect4Logo.png");
+    logoLabel = new JLabel(connect4Logo); 
+    introPanel.add(logoLabel, BorderLayout.CENTER);
 
   }
 
 
   public void setUpButtonPanel() {
-    buttonPanel = new JPanel(new BorderLayout());
-    buttonPanel.setPreferredSize(new Dimension(1300, 500));
-    buttonPanel.setBackground(Color.GREEN);
+    buttonPanel = new JPanel(new FlowLayout());
+    buttonPanel.setPreferredSize(new Dimension(1300, 420));
     buttonPanel.setOpaque(true);
     buttonPanel.setVisible(true);
 
     multiPlayerButton = new JButton("1 v 1");
-    multiPlayerButton.setBounds(200, 200, 200, 200);
+    multiPlayerButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    multiPlayerButton.setPreferredSize(new Dimension(400, 180));
     multiPlayerButton.setVisible(true);
     multiPlayerButton.setFont(new Font("Sans_Serif", Font.BOLD, 20));
-    multiPlayerButton.setBackground(Color.RED);
     multiPlayerButton.setOpaque(true);
     multiPlayerButton.setVisible(true);
 
 
     singlePlayerButton = new JButton("1 v AI");
-    singlePlayerButton.setBounds(500, 500, 200, 200);
+    singlePlayerButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    singlePlayerButton.setPreferredSize(new Dimension(400, 180));
     singlePlayerButton.setVisible(true);
     singlePlayerButton.setFont(new Font("Sans_Serif", Font.BOLD, 20));
-    singlePlayerButton.setBackground(Color.BLUE);
     singlePlayerButton.setOpaque(true);
     singlePlayerButton.setVisible(true);
+
+    Color backgroundColor = buttonPanel.getBackground();
+
+    horizontalSpacer = new JLabel();
+    horizontalSpacer.setPreferredSize(new Dimension(250, 200));
+    horizontalSpacer.setBackground(backgroundColor);
+    horizontalSpacer.setOpaque(true);
+    horizontalSpacer.setVisible(true);
+
+    nameLabel = new JLabel("By: Ben and Kiyan");
+    
 
     //Action Listener so when the single player button is clicked, the corresponding board will open
     singlePlayerButton.addActionListener(new ActionListener() {
@@ -97,7 +121,6 @@ public void setUp1v1GamePanel() {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
           setUp1v1GamePanel();
-        System.out.println("Single Player Button Clicked");
       }
     });
 
@@ -111,13 +134,15 @@ public void setUp1v1GamePanel() {
     });
 
 
-    buttonPanel.add(multiPlayerButton, BorderLayout.WEST);
-    buttonPanel.add(singlePlayerButton, BorderLayout.EAST);
+    buttonPanel.add(multiPlayerButton);
+    buttonPanel.add(horizontalSpacer);
+    buttonPanel.add(singlePlayerButton);
+    buttonPanel.add(nameLabel);
 
   }
 
 
-  //Panel that is created after starting the 1v1 game mode. poop 
+  //Panel that is created after starting the 1v1 game mode.
  
 
   // Connect 4 Game Board Creation

@@ -1,12 +1,8 @@
-import java.awt.Color;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 public class Connect4Board {
-    JFrame mainWindow;
+    private JFrame mainWindow;
 
     public Connect4Board() {
         mainWindow = new JFrame("Connect4Board");
@@ -14,23 +10,26 @@ public class Connect4Board {
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setResizable(false);
 
-        JPanel boardPanel = new JPanel();
+        
+        JPanel boardPanel = new JPanel(new GridBagLayout()); 
         boardPanel.setBackground(Color.WHITE);
 
-        mainWindow.add(boardPanel);
+      
+        ImageIcon boardImg = new ImageIcon("Board.png"); 
+        
+        JLabel boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
+        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
 
+        mainWindow.setLayout(new BorderLayout());
+        boardPanel.add(boardPlacement);
+        mainWindow.add(boardPanel, BorderLayout.CENTER);
+        
+        
+        mainWindow.setSize(1300, 1050);
         mainWindow.setVisible(true);
-    
+    }
 
-    ImageIcon boardImg = new ImageIcon("Board.png"); 
-    JLabel boardLabel = new JLabel(boardImg);
-    
-   
-    
-    boardPanel.add(boardLabel);
-    mainWindow.add(boardPanel);
-    mainWindow.setVisible(true);
-}
 
     public static void main(String[] args) {
         new Connect4Board();

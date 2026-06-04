@@ -56,6 +56,7 @@ public void setUp1v1GamePanel() {
     _1vAIGamePanel.setVisible(true);
 
   }
+  
   // Setting up the intro panel
   public void setUpIntroPanel() {
     introPanel = new JPanel(new BorderLayout());
@@ -165,6 +166,12 @@ public void setUp1v1GamePanel() {
       System.out.println();
     }
   }
+
+
+  
+
+
+
 
   public static void main(String[] args) {
     new Connect4();

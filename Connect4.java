@@ -35,6 +35,8 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
+  JLabel instructionLabel; 
+
 
 
   // The classes main constructor method
@@ -60,6 +62,9 @@ public class Connect4 {
 
   }
 public void setUp1v1GamePanel() {
+instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
+    instructionLabel.setHorizontalAlignment(JLabel.CENTER);
+  instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24));
     _1v1gamePanel = new JPanel(new BorderLayout());
     _1v1gamePanel.setSize(1300, 1050);
     _1v1gamePanel.setVisible(false);
@@ -75,10 +80,14 @@ public void setUp1v1GamePanel() {
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
+        _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
 
   }
 
   public void setUp1vAIGamePanel() {
+    instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
+    instructionLabel.setHorizontalAlignment(JLabel.CENTER);
+    instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24)); 
     _1vAIGamePanel = new JPanel(new BorderLayout());
     _1vAIGamePanel.setSize(1300, 1050);
     _1vAIGamePanel.setVisible(false);
@@ -93,6 +102,8 @@ public void setUp1v1GamePanel() {
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
         _1vAIGamePanel.add(boardPanel, BorderLayout.CENTER);
+        _1vAIGamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+        
 
   }
   

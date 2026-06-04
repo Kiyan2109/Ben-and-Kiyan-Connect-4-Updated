@@ -35,6 +35,8 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
+  int newWidth = 900;
+  int newHeight = 800;
 
 
   // The classes main constructor method
@@ -67,10 +69,10 @@ public void setUp1v1GamePanel() {
     boardPanel = new JPanel(new GridBagLayout()); 
         boardPanel.setBackground(Color.WHITE);
 
-      
-        boardImg = new ImageIcon("Board.png"); 
         
-        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        boardImg = new ImageIcon("Board.png"); 
+        scaledImage = new ImageIcon(boardImg.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH));
+        boardPlacement = new JLabel(scaledImage, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
@@ -158,7 +160,7 @@ public void setUp1v1GamePanel() {
     verticalSpacer.setVisible(true);
 
   
-  nameLabel = new JLabel("By: Ben Elizur and Kiyan Sadr-Hayes");
+    nameLabel = new JLabel("By: Ben Elizur and Kiyan Sadr-Hayes");
     
 
     

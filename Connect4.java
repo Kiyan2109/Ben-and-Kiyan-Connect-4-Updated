@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -31,6 +32,10 @@ public class Connect4 {
   JLabel logoLabel; 
   JLabel nameLabel; 
   JPanel namePanel; 
+  JPanel boardPanel; 
+  ImageIcon boardImg;
+  JLabel boardPlacement;
+
 
   // The classes main constructor method
   public Connect4() {
@@ -46,20 +51,48 @@ public class Connect4 {
     setUpButtonPanel();
       mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
 
+  setUp1vAIGamePanel();
+      mainWindow.add(_1vAIGamePanel, BorderLayout.CENTER);
 
+      setUp1v1GamePanel();
+      mainWindow.add(_1v1gamePanel, BorderLayout.CENTER);
+    
 
   }
 public void setUp1v1GamePanel() {
     _1v1gamePanel = new JPanel(new BorderLayout());
     _1v1gamePanel.setSize(1300, 1050);
-    _1v1gamePanel.setVisible(true);
+    _1v1gamePanel.setVisible(false);
+
+    boardPanel = new JPanel(new GridBagLayout()); 
+        boardPanel.setBackground(Color.WHITE);
+
+      
+        boardImg = new ImageIcon("Board.png"); 
+        
+        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
+        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
+        boardPanel.add(boardPlacement);
+        _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
 
   }
 
   public void setUp1vAIGamePanel() {
     _1vAIGamePanel = new JPanel(new BorderLayout());
     _1vAIGamePanel.setSize(1300, 1050);
-    _1vAIGamePanel.setVisible(true);
+    _1vAIGamePanel.setVisible(false);
+    boardPanel = new JPanel(new GridBagLayout()); 
+        boardPanel.setBackground(Color.WHITE);
+
+      
+        boardImg = new ImageIcon("Board.png"); 
+        
+        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
+        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
+        boardPanel.add(boardPlacement);
+        _1vAIGamePanel.add(boardPanel, BorderLayout.CENTER);
 
   }
   
@@ -136,7 +169,8 @@ public void setUp1v1GamePanel() {
       public void actionPerformed(ActionEvent evt) {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
-          setUp1v1GamePanel();
+          _1v1gamePanel.setVisible(true);
+          
       }
     });
 
@@ -145,7 +179,8 @@ public void setUp1v1GamePanel() {
       public void actionPerformed(ActionEvent evt) {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
-          setUp1vAIGamePanel();
+          _1vAIGamePanel.setVisible(true);
+
       }
     });
 
@@ -185,40 +220,6 @@ public void setUp1v1GamePanel() {
       System.out.println();
     }
   }
-
-  public Connect4Board() {
-        mainWindow = new JFrame("Connect4Board");
-        mainWindow.setSize(1300, 1050);
-        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setResizable(false);
-
-        
-        JPanel boardPanel = new JPanel(new GridBagLayout()); 
-        boardPanel.setBackground(Color.WHITE);
-
-      
-        ImageIcon boardImg = new ImageIcon("Board.png"); 
-        
-        JLabel boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
-        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
-        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
-
-        mainWindow.setLayout(new BorderLayout());
-        boardPanel.add(boardPlacement);
-        mainWindow.add(boardPanel, BorderLayout.CENTER);
-        
-        
-        mainWindow.setSize(1300, 1050);
-        mainWindow.setVisible(true);
-    }
-  
-
-
-
-
-
-
-
 
 
   public static void main(String[] args) {

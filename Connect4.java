@@ -35,8 +35,6 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
-  JLabel instructionLabel; 
-
 
 
   // The classes main constructor method
@@ -72,10 +70,10 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     boardPanel = new JPanel(new GridBagLayout()); 
         boardPanel.setBackground(Color.WHITE);
 
-      
-        boardImg = new ImageIcon("Board.png"); 
         
-        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        boardImg = new ImageIcon("Board.png"); 
+        scaledImage = new ImageIcon(boardImg.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH));
+        boardPlacement = new JLabel(scaledImage, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
@@ -169,7 +167,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     verticalSpacer.setVisible(true);
 
   
-  nameLabel = new JLabel("By: Ben Elizur and Kiyan Sadr-Hayes");
+    nameLabel = new JLabel("By: Ben Elizur and Kiyan Sadr-Hayes");
     
 
     

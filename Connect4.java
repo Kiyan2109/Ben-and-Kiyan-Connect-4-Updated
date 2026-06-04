@@ -25,9 +25,11 @@ public class Connect4 {
   JComponent _1v1gamePanel; 
   JComponent _1vAIGamePanel;
   JLabel horizontalSpacer; 
+  JLabel verticalSpacer; 
   ImageIcon connect4Logo;
   JLabel logoLabel; 
   JLabel nameLabel; 
+  JPanel namePanel; 
 
   // The classes main constructor method
   public Connect4() {
@@ -42,6 +44,9 @@ public class Connect4 {
 
     setUpButtonPanel();
       mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
+
+
+
   }
 public void setUp1v1GamePanel() {
     _1v1gamePanel = new JPanel(new BorderLayout());
@@ -112,7 +117,16 @@ public void setUp1v1GamePanel() {
     horizontalSpacer.setOpaque(true);
     horizontalSpacer.setVisible(true);
 
-    nameLabel = new JLabel("By: Ben and Kiyan");
+    verticalSpacer = new JLabel(); 
+    verticalSpacer.setPreferredSize(new Dimension(920, 320)); 
+    verticalSpacer.setBackground(backgroundColor);
+    verticalSpacer.setOpaque(true);
+    verticalSpacer.setVisible(true);
+
+  
+  nameLabel = new JLabel("By: Ben Elizur and Kiyan Sadr-Hayes");
+    
+
     
 
     //Action Listener so when the single player button is clicked, the corresponding board will open
@@ -138,12 +152,16 @@ public void setUp1v1GamePanel() {
     buttonPanel.add(multiPlayerButton);
     buttonPanel.add(horizontalSpacer);
     buttonPanel.add(singlePlayerButton);
-    buttonPanel.add(nameLabel);
+    buttonPanel.add(verticalSpacer);
+    buttonPanel.add(nameLabel); 
+
 
   }
 
 
-  //Panel that is created after starting the 1v1 game mode.
+  
+  
+
  
 
   // Connect 4 Game Board Creation

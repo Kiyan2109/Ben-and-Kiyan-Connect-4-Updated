@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class Connect4 {
   JFrame mainWindow;
@@ -185,8 +186,37 @@ public void setUp1v1GamePanel() {
     }
   }
 
+  public Connect4Board() {
+        mainWindow = new JFrame("Connect4Board");
+        mainWindow.setSize(1300, 1050);
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setResizable(false);
 
+        
+        JPanel boardPanel = new JPanel(new GridBagLayout()); 
+        boardPanel.setBackground(Color.WHITE);
+
+      
+        ImageIcon boardImg = new ImageIcon("Board.png"); 
+        
+        JLabel boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
+        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
+
+        mainWindow.setLayout(new BorderLayout());
+        boardPanel.add(boardPlacement);
+        mainWindow.add(boardPanel, BorderLayout.CENTER);
+        
+        
+        mainWindow.setSize(1300, 1050);
+        mainWindow.setVisible(true);
+    }
   
+
+
+
+
+
 
 
 

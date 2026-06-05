@@ -38,7 +38,6 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
-  TokenArray tokenArray;
   
 
 
@@ -66,7 +65,29 @@ public class Connect4 {
     
 
   }
+
+  public JButton boardButtons(int xPosition, int yPosition) {
+JButton columnButton = new JButton();
+columnButton.setContentAreaFilled(false); 
+columnButton.setBorderPainted(false);  
+columnButton.setBounds(xPosition, yPosition, 100, 600); 
+
+  
+
+columnButton.addActionListener(new ActionListener() {
+  @Override 
+  public void actionPerformed(ActionEvent evt) {
+//When pressed, a piece will drop in the corresponding column. 
+  }
+  });
+
+return columnButton;
+}
+
 public void setUp1v1GamePanel() {
+instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
+    instructionLabel.setHorizontalAlignment(JLabel.CENTER);
+  instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24));
     _1v1gamePanel = new JPanel(new BorderLayout());
     _1v1gamePanel.setSize(1300, 1050);
     _1v1gamePanel.setVisible(false);
@@ -82,6 +103,16 @@ public void setUp1v1GamePanel() {
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
+        _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+
+        _1v1columnButton1 = boardButtons(100, 100);
+       _1v1columnButton2 = boardButtons(200, 100);
+       _1v1columnButton3 = boardButtons(300, 100);
+       _1v1columnButton4 = boardButtons(400, 100);
+       _1v1columnButton5 = boardButtons(500, 100);
+       _1v1columnButton6 = boardButtons(600, 100);
+       _1v1columnButton7 = boardButtons(700, 100);
+
 
         printBoard(tokenArray);
 
@@ -91,6 +122,9 @@ public void setUp1v1GamePanel() {
   
 
   public void setUp1vAIGamePanel() {
+    instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
+    instructionLabel.setHorizontalAlignment(JLabel.CENTER);
+    instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24)); 
     _1vAIGamePanel = new JPanel(new BorderLayout());
     _1vAIGamePanel.setSize(1300, 1050);
     _1vAIGamePanel.setVisible(false);
@@ -105,6 +139,8 @@ public void setUp1v1GamePanel() {
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
         _1vAIGamePanel.add(boardPanel, BorderLayout.CENTER);
+        _1vAIGamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+        
 
         printBoard(tokenArray);
 
@@ -146,7 +182,6 @@ public void setUp1v1GamePanel() {
     multiPlayerButton.setVisible(true);
     multiPlayerButton.setFont(new Font("Sans_Serif", Font.BOLD, 20));
     multiPlayerButton.setOpaque(true);
-    multiPlayerButton.setVisible(true);
 
 
     singlePlayerButton = new JButton("1 v AI");

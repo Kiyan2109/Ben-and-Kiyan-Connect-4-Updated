@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,8 +36,7 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
-  int newWidth = 900;
-  int newHeight = 800;
+  
 
 
   // The classes main constructor method
@@ -70,9 +70,9 @@ public void setUp1v1GamePanel() {
         boardPanel.setBackground(Color.WHITE);
 
         
-        boardImg = new ImageIcon("Board.png"); 
-        scaledImage = new ImageIcon(boardImg.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH));
-        boardPlacement = new JLabel(scaledImage, SwingConstants.CENTER);
+        ImageIcon boardImg = new ImageIcon("board.png");
+        
+        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
@@ -88,7 +88,7 @@ public void setUp1v1GamePanel() {
         boardPanel.setBackground(Color.WHITE);
 
       
-        boardImg = new ImageIcon("Board.png"); 
+        boardImg = new ImageIcon("board.png"); 
         
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);

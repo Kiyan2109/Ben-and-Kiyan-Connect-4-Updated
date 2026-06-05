@@ -28,7 +28,7 @@ public class Connect4 {
   JButton singlePlayerButton;
   JPanel buttonPanel;
   JComponent _1v1gamePanel; 
-  JComponent _1vAIGamePanel;
+  JComponent _1vAIgamePanel;
   JLabel horizontalSpacer; 
   JLabel verticalSpacer; 
   ImageIcon connect4Logo;
@@ -40,6 +40,7 @@ public class Connect4 {
   JLabel boardPlacement;
   
 
+  //Make the constraints for a gridbaglayout to apply to all the connect 4 boards
 
   // The classes main constructor method
   public Connect4() {
@@ -58,18 +59,19 @@ public class Connect4 {
       mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
 
   setUp1vAIGamePanel();
-      mainWindow.add(_1vAIGamePanel, BorderLayout.CENTER);
+      mainWindow.add(_1v1gamePanel, BorderLayout.CENTER);
 
       setUp1v1GamePanel();
       mainWindow.add(_1v1gamePanel, BorderLayout.CENTER);
     
 
   }
-
+//Change the parameters to be a gridbaglayout
   public JButton boardButtons(int xPosition, int yPosition) {
 JButton columnButton = new JButton();
-columnButton.setContentAreaFilled(false); 
-columnButton.setBorderPainted(false);  
+//columnButton.setContentAreaFilled(false); 
+//columnButton.setBorderPainted(false);
+columnButton.setVisible(true);   
 columnButton.setBounds(xPosition, yPosition, 100, 600); 
 
   
@@ -113,6 +115,15 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
        _1v1columnButton6 = boardButtons(600, 100);
        _1v1columnButton7 = boardButtons(700, 100);
 
+       //Add to the right gridbaglayout position
+       boardPanel.add(_1v1columnButton1);
+       boardPanel.add(_1v1columnButton2);
+       boardPanel.add(_1v1columnButton3);
+       boardPanel.add(_1v1columnButton4);
+       boardPanel.add(_1v1columnButton5);
+       boardPanel.add(_1v1columnButton6);
+       boardPanel.add(_1v1columnButton7);
+
 
         printBoard(tokenArray);
 
@@ -125,9 +136,9 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
     instructionLabel.setHorizontalAlignment(JLabel.CENTER);
     instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24)); 
-    _1vAIGamePanel = new JPanel(new BorderLayout());
-    _1vAIGamePanel.setSize(1300, 1050);
-    _1vAIGamePanel.setVisible(false);
+    _1v1gamePanel = new JPanel(new BorderLayout());
+    _1v1gamePanel.setSize(1300, 1050);
+    _1v1gamePanel.setVisible(false);
     boardPanel = new JPanel(new GridBagLayout()); 
         boardPanel.setBackground(Color.WHITE);
 
@@ -138,8 +149,8 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
-        _1vAIGamePanel.add(boardPanel, BorderLayout.CENTER);
-        _1vAIGamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+        _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
+        _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
         
 
         printBoard(tokenArray);
@@ -228,7 +239,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
       public void actionPerformed(ActionEvent evt) {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
-          _1vAIGamePanel.setVisible(true);
+          _1v1gamePanel.setVisible(true);
 
       }
     });

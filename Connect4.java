@@ -35,6 +35,14 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
+  JLabel instructionLabel;
+  JButton _1v1columnButton1;
+  JButton _1v1columnButton2; 
+  JButton _1v1columnButton3; 
+  JButton _1v1columnButton4; 
+  JButton _1v1columnButton5; 
+  JButton _1v1columnButton6; 
+  JButton _1v1columnButton7;  
 
 
   // The classes main constructor method
@@ -59,6 +67,25 @@ public class Connect4 {
     
 
   }
+
+  public JButton boardButtons(int xPosition, int yPosition) {
+JButton columnButton = new JButton();
+columnButton.setContentAreaFilled(false); 
+columnButton.setBorderPainted(false);  
+columnButton.setBounds(xPosition, yPosition, 100, 600); 
+
+  
+
+columnButton.addActionListener(new ActionListener() {
+  @Override 
+  public void actionPerformed(ActionEvent evt) {
+//When pressed, a piece will drop in the corresponding column. 
+  }
+  });
+
+return columnButton;
+}
+
 public void setUp1v1GamePanel() {
 instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
     instructionLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -79,6 +106,15 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+
+        _1v1columnButton1 = boardButtons(100, 100);
+       _1v1columnButton2 = boardButtons(200, 100);
+       _1v1columnButton3 = boardButtons(300, 100);
+       _1v1columnButton4 = boardButtons(400, 100);
+       _1v1columnButton5 = boardButtons(500, 100);
+       _1v1columnButton6 = boardButtons(600, 100);
+       _1v1columnButton7 = boardButtons(700, 100);
+
 
   }
 
@@ -141,7 +177,6 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     multiPlayerButton.setVisible(true);
     multiPlayerButton.setFont(new Font("Sans_Serif", Font.BOLD, 20));
     multiPlayerButton.setOpaque(true);
-    multiPlayerButton.setVisible(true);
 
 
     singlePlayerButton = new JButton("1 v AI");

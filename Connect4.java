@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -98,9 +99,9 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         boardPanel.setBackground(Color.WHITE);
 
         
-        boardImg = new ImageIcon("Board.png"); 
-        scaledImage = new ImageIcon(boardImg.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH));
-        boardPlacement = new JLabel(scaledImage, SwingConstants.CENTER);
+        ImageIcon boardImg = new ImageIcon("board.png");
+        
+        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
@@ -129,7 +130,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         boardPanel.setBackground(Color.WHITE);
 
       
-        boardImg = new ImageIcon("Board.png"); 
+        boardImg = new ImageIcon("board.png"); 
         
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);

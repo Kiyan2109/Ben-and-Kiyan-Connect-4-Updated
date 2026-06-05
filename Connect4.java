@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Graphics;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import java.lang.Override;
 
 public class Connect4 {
   JFrame mainWindow;
@@ -36,6 +38,7 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
+  TokenArray tokenArray;
   
 
 
@@ -46,6 +49,8 @@ public class Connect4 {
     mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     mainWindow.setResizable(false);
     mainWindow.setVisible(true);
+  
+    tokenArray=new TokenArray();
 
     setUpIntroPanel();
     mainWindow.add(introPanel, BorderLayout.PAGE_START);
@@ -78,7 +83,12 @@ public void setUp1v1GamePanel() {
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
 
+        printBoard(tokenArray);
+
   }
+        
+
+  
 
   public void setUp1vAIGamePanel() {
     _1vAIGamePanel = new JPanel(new BorderLayout());
@@ -95,6 +105,8 @@ public void setUp1v1GamePanel() {
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPanel.add(boardPlacement);
         _1vAIGamePanel.add(boardPanel, BorderLayout.CENTER);
+
+        printBoard(tokenArray);
 
   }
   
@@ -196,32 +208,48 @@ public void setUp1v1GamePanel() {
 
   }
 
+  public class TokenArray {
+    char[][] board;
 
-  
-  
+    public TokenArray() {
+      board = new char[6][7];
+      initializeBoard();
+    }
 
- 
-
-  // Connect 4 Game Board Creation
-  char [][] board = new char[6][7];
-
-  private void initializeBoard() {
-    for (int row = 0; row < 6; row++) {
-      for (int col = 0; col < 7; col++) {
-        board[row][col] = ' ';
+    public void initializeBoard() {
+      for (int row = 0; row < 6; row++) {
+        for (int col = 0; col < 7; col++) {
+          board[row][col] = ' ';
+        }
       }
     }
   }
 
-  //Print the board using a 2d array that checks if it has reached the end of the row and column and prints the appropriate character. 
-  public static void printBoard(char[][] board) {
+  public boolean placeToken(TokenArray tokenArray, int column, char playerToken) {
+    for (int row = 5; row >= 0; row--) {
+      if (tokenArray.board[row][column] == ' ') {
+        tokenArray.board[row][column] = playerToken;
+        return true;
+      }
+    }
+    System.out.println("This colummn is full. Please place the piece again.");
+    return false; 
+  }
+
+
+  public void printBoard(TokenArray tokenArray) {
     for (int row = 0; row < 6; row++) {
       for (int col = 0; col < 7; col++) {
-        System.out.print(board[row][col] + " ");
+        System.out.print(tokenArray.board[row][col] + " ");
       }
       System.out.println();
     }
+
+    
   }
+
+
+
 
 
   public static void main(String[] args) {

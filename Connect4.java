@@ -77,12 +77,30 @@ JButton columnButton = new JButton();
 columnButton.setVisible(true);   
 columnButton.setBounds(xPosition, yPosition, 100, 600); 
 
+    ImageIcon yellowPiece = new ImageIcon("YellowPiece-Photoroom.png");      
   
 
 columnButton.addActionListener(new ActionListener() {
   @Override 
   public void actionPerformed(ActionEvent evt) {
+    
+      ImageIcon redPiece = new ImageIcon("RedPiece-Photoroom.png");
+      System.out.println(redPiece.getIconWidth());
+
+      boardPlacement.setLayout(null);
+
+
+      JLabel redPiecePlacement = new JLabel(redPiece);
+      
+
+      //Doesn't show up yet, waiting for array values to equate the two. 
+      boardPlacement.add(redPiecePlacement);
+      boardPlacement.revalidate();
+      boardPlacement.repaint();
+
+
 //When pressed, a piece will drop in the corresponding column. 
+
   }
   });
 
@@ -103,6 +121,9 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         
         ImageIcon boardImg = new ImageIcon("board.png");
         
+
+
+
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
@@ -126,6 +147,8 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
        boardPanel.add(_1v1columnButton5);
        boardPanel.add(_1v1columnButton6);
        boardPanel.add(_1v1columnButton7);
+
+
 
 
   }

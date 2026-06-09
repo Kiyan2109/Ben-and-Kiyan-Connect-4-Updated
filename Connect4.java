@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Graphics;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.lang.Override;
 
 public class Connect4 {
   JFrame mainWindow;
@@ -38,7 +36,14 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
-  
+  JLabel instructionLabel;
+  JButton _1v1columnButton1;
+  JButton _1v1columnButton2; 
+  JButton _1v1columnButton3; 
+  JButton _1v1columnButton4; 
+  JButton _1v1columnButton5; 
+  JButton _1v1columnButton6; 
+  JButton _1v1columnButton7;  
 
   //Make the constraints for a gridbaglayout to apply to all the connect 4 boards
 
@@ -49,8 +54,6 @@ public class Connect4 {
     mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     mainWindow.setResizable(false);
     mainWindow.setVisible(true);
-  
-    tokenArray=new TokenArray();
 
     setUpIntroPanel();
     mainWindow.add(introPanel, BorderLayout.PAGE_START);
@@ -125,12 +128,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
        boardPanel.add(_1v1columnButton7);
 
 
-        printBoard(tokenArray);
-
   }
-        
-
-  
 
   public void setUp1vAIGamePanel() {
     instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
@@ -152,8 +150,6 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
         
-
-        printBoard(tokenArray);
 
   }
   
@@ -254,48 +250,32 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
 
   }
 
-  public class TokenArray {
-    char[][] board;
 
-    public TokenArray() {
-      board = new char[6][7];
-      initializeBoard();
-    }
+  
+  
 
-    public void initializeBoard() {
-      for (int row = 0; row < 6; row++) {
-        for (int col = 0; col < 7; col++) {
-          board[row][col] = ' ';
-        }
-      }
-    }
-  }
+ 
 
-  public boolean placeToken(TokenArray tokenArray, int column, char playerToken) {
-    for (int row = 5; row >= 0; row--) {
-      if (tokenArray.board[row][column] == ' ') {
-        tokenArray.board[row][column] = playerToken;
-        return true;
-      }
-    }
-    System.out.println("This colummn is full. Please place the piece again.");
-    return false; 
-  }
+  // Connect 4 Game Board Creation
+  char [][] board = new char[6][7];
 
-
-  public void printBoard(TokenArray tokenArray) {
+  private void initializeBoard() {
     for (int row = 0; row < 6; row++) {
       for (int col = 0; col < 7; col++) {
-        System.out.print(tokenArray.board[row][col] + " ");
+        board[row][col] = ' ';
+      }
+    }
+  }
+
+  //Print the board using a 2d array that checks if it has reached the end of the row and column and prints the appropriate character. 
+  public static void printBoard(char[][] board) {
+    for (int row = 0; row < 6; row++) {
+      for (int col = 0; col < 7; col++) {
+        System.out.print(board[row][col] + " ");
       }
       System.out.println();
     }
-
-    
   }
-
-
-
 
 
   public static void main(String[] args) {
@@ -305,3 +285,4 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
 }
     
 
+//I wonder if this works. 

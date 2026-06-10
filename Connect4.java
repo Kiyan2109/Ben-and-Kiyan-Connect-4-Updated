@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.GridBagLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -45,6 +47,9 @@ public class Connect4 {
   JButton _1v1columnButton5; 
   JButton _1v1columnButton6; 
   JButton _1v1columnButton7;  
+  int getHeight = 0;
+  int getWidth = 0;
+  int BackgroundSize = 0;
   GridBagConstraints gbc;
   JButton resetButton; 
   ImageIcon goBackImg; 
@@ -127,19 +132,12 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     _1v1gamePanel.setSize(1300, 1050);
     _1v1gamePanel.setVisible(false);
 
+    
     boardPanel = new JPanel(new GridBagLayout());
         boardPanel.setBackground(Color.WHITE);
+
         
         ImageIcon boardImg = new ImageIcon("board.png");
-        goBackImg = new ImageIcon("GoBack.png");
-
-resetButton = new JButton(goBackImg);
-resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    resetButton.setPreferredSize(new Dimension(200, 150));
-    resetButton.setVisible(true);
-    resetButton.setOpaque(true);
-
-
         
 
 
@@ -150,7 +148,6 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
-        _1v1gamePanel.add(resetButton, BorderLayout.EAST); 
 
         //_1v1columnButton1 = boardButtons(1);
         //boardPanel.add(_1v1columnButton1, gbc);

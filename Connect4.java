@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -46,7 +47,14 @@ public class Connect4 {
   JButton _1v1columnButton7;  
 
   //Make the constraints for a gridbaglayout to apply to all the connect 4 boards
-
+  GridBagConstraints gbc = new GridBagConstraints(); 
+  {
+    gbc.fill = GridBagConstraints.BOTH; 
+    gbc.gridheight = 7; 
+    //this line doesnt do anything for some reasion
+    gbc.gridwidth = 8;
+    
+  }
   // The classes main constructor method
   public Connect4() {
     mainWindow = new JFrame("Connect4");
@@ -70,12 +78,13 @@ public class Connect4 {
 
   }
 //Change the parameters to be a gridbaglayout
-  public JButton boardButtons(int xPosition, int yPosition) {
+  public JButton boardButtons(int xPosition) {
+    //this line isnt doing anything
+    gbc.gridx = xPosition; 
 JButton columnButton = new JButton();
 //columnButton.setContentAreaFilled(false); 
 //columnButton.setBorderPainted(false);
 columnButton.setVisible(true);   
-columnButton.setBounds(xPosition, yPosition, 100, 600); 
 
     ImageIcon yellowPiece = new ImageIcon("YellowPiece-Photoroom.png");      
   
@@ -115,7 +124,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     _1v1gamePanel.setSize(1300, 1050);
     _1v1gamePanel.setVisible(false);
 
-    boardPanel = new JPanel(new GridBagLayout()); 
+    boardPanel = new JPanel(new GridBagLayout());
         boardPanel.setBackground(Color.WHITE);
 
         
@@ -131,22 +140,26 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
 
-        _1v1columnButton1 = boardButtons(100, 100);
-       _1v1columnButton2 = boardButtons(200, 100);
-       _1v1columnButton3 = boardButtons(300, 100);
-       _1v1columnButton4 = boardButtons(400, 100);
-       _1v1columnButton5 = boardButtons(500, 100);
-       _1v1columnButton6 = boardButtons(600, 100);
-       _1v1columnButton7 = boardButtons(700, 100);
+        //_1v1columnButton1 = boardButtons(1);
+        //boardPanel.add(_1v1columnButton1, gbc);
+       //_1v1columnButton2 = boardButtons(2);
+              //boardPanel.add(_1v1columnButton2, gbc);
+       //_1v1columnButton3 = boardButtons(3);
+       //boardPanel.add(_1v1columnButton3, gbc);
+       //_1v1columnButton4 = boardButtons(4);
+        //boardPanel.add(_1v1columnButton4, gbc);
+       //_1v1columnButton5 = boardButtons(5);
+       //boardPanel.add(_1v1columnButton5, gbc);
+       //_1v1columnButton6 = boardButtons(6);
+       //boardPanel.add(_1v1columnButton6, gbc);
+       _1v1columnButton7 = boardButtons(2);
+        boardPanel.add(_1v1columnButton7, gbc);
 
-       //Add to the right gridbaglayout position
-       boardPanel.add(_1v1columnButton1);
-       boardPanel.add(_1v1columnButton2);
-       boardPanel.add(_1v1columnButton3);
-       boardPanel.add(_1v1columnButton4);
-       boardPanel.add(_1v1columnButton5);
-       boardPanel.add(_1v1columnButton6);
-       boardPanel.add(_1v1columnButton7);
+
+      
+       
+       
+      
 
 
 
@@ -169,7 +182,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
-        boardPanel.add(boardPlacement);
+        _1v1gamePanel.add(boardPlacement, BorderLayout.CENTER);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
         

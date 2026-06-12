@@ -116,6 +116,10 @@ columnButton.addActionListener(new ActionListener() {
       boardPlacement.repaint();
 
 
+      
+      
+
+
 //When pressed, a piece will drop in the corresponding column. 
 
   }
@@ -133,18 +137,18 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     _1v1gamePanel.setVisible(false);
 
     
-    boardPanel = new JPanel(new GridBagLayout());
-        boardPanel.setBackground(Color.WHITE);
+    boardPanel = new JPanel();
+    boardPanel.setLayout(null);
+    boardPanel.setBackground(Color.WHITE);
 
         
         ImageIcon boardImg = new ImageIcon("board.png");
         
 
-
-
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
+        boardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
@@ -161,11 +165,32 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
        //boardPanel.add(_1v1columnButton5, gbc);
        //_1v1columnButton6 = boardButtons(6);
        //boardPanel.add(_1v1columnButton6, gbc);
-       _1v1columnButton7 = boardButtons(2);
-        boardPanel.add(_1v1columnButton7, gbc);
+       //_1v1columnButton7 = boardButtons(2);
+       //boardPanel.add(_1v1columnButton7, gbc);
 
 
+      for (int i = 0; i < 7; i++) {
+
+      JButton boardButtons = new JButton("67");
+
+      boardButtons.setBounds(175 + (i * 135), 195, 135, 610);
+  
+
+      boardButtons.setOpaque(false);
+      boardButtons.setContentAreaFilled(false);
+      boardButtons.setBorderPainted(false);
       
+      
+
+      boardButtons.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Button clicked!");
+        }
+      });
+
+      boardPanel.add(boardButtons);
+}
        
        
       

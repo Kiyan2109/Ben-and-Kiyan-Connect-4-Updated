@@ -50,16 +50,11 @@ public class Connect4 {
   int getHeight = 0;
   int getWidth = 0;
   int BackgroundSize = 0;
+  GridBagConstraints gbc;
+  JButton resetButton; 
+  ImageIcon goBackImg; 
 
-  //Make the constraints for a gridbaglayout to apply to all the connect 4 boards
-  GridBagConstraints gbc = new GridBagConstraints(); 
-  {
-    gbc.fill = GridBagConstraints.BOTH; 
-    gbc.gridheight = 7; 
-    //this line doesnt do anything for some reasion
-    gbc.gridwidth = 8;
-    
-  }
+
   // The classes main constructor method
   public Connect4() {
     mainWindow = new JFrame("Connect4");
@@ -68,6 +63,14 @@ public class Connect4 {
     mainWindow.setResizable(false);
     mainWindow.setVisible(true);
 
+    gbc = new GridBagConstraints(); 
+  gbc.weightx = 1;
+  gbc.weighty = 1;
+    gbc.fill = GridBagConstraints.VERTICAL; 
+    gbc.gridheight = 3; 
+    //this line doesnt do anything for some reasion
+    gbc.gridwidth = 1;
+    
     setUpIntroPanel();
     mainWindow.add(introPanel, BorderLayout.PAGE_START);
 
@@ -113,6 +116,10 @@ columnButton.addActionListener(new ActionListener() {
       boardPlacement.repaint();
 
 
+      
+      
+
+
 //When pressed, a piece will drop in the corresponding column. 
 
   }
@@ -129,27 +136,22 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     _1v1gamePanel.setSize(1300, 1050);
     _1v1gamePanel.setVisible(false);
 
-    final ImageIcon boardImg = new ImageIcon("board.png");
-
-
-    boardPanel = new JPanel(new GridBagLayout()) {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(boardImg.getImage(), 0, 0, getWidth(), getHeight(), this);
-        }
-    };
     
+    boardPanel = new JPanel();
+    boardPanel.setLayout(null);
     boardPanel.setBackground(Color.WHITE);
-    boardPanel.setPreferredSize(new Dimension(300, 400));
 
+        
+        ImageIcon boardImg = new ImageIcon("board.png");
+        
 
-        //boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
-        //boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
-        //boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
-        //boardPanel.add(boardPlacement);
-        //_1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
-        //_1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
+        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
+        boardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
+        boardPanel.add(boardPlacement);
+        _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
+        _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
 
         //_1v1columnButton1 = boardButtons(1);
         //boardPanel.add(_1v1columnButton1, gbc);
@@ -163,11 +165,32 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
        //boardPanel.add(_1v1columnButton5, gbc);
        //_1v1columnButton6 = boardButtons(6);
        //boardPanel.add(_1v1columnButton6, gbc);
-       _1v1columnButton7 = boardButtons(2);
-        boardPanel.add(_1v1columnButton7, gbc);
+       //_1v1columnButton7 = boardButtons(2);
+       //boardPanel.add(_1v1columnButton7, gbc);
 
 
+      for (int i = 0; i < 7; i++) {
+
+      JButton boardButtons = new JButton("67");
+
+      boardButtons.setBounds(175 + (i * 135), 195, 135, 610);
+  
+
+      boardButtons.setOpaque(false);
+      boardButtons.setContentAreaFilled(false);
+      boardButtons.setBorderPainted(false);
       
+      
+
+      boardButtons.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Button clicked!");
+        }
+      });
+
+      boardPanel.add(boardButtons);
+}
        
        
       
@@ -244,7 +267,6 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     singlePlayerButton.setVisible(true);
     singlePlayerButton.setFont(new Font("Sans_Serif", Font.BOLD, 20));
     singlePlayerButton.setOpaque(true);
-    singlePlayerButton.setVisible(true);
 
     Color backgroundColor = buttonPanel.getBackground();
 
@@ -333,3 +355,4 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     
 
 //I wonder if this works. 
+//Entering this to commit.

@@ -63,11 +63,11 @@ public class Connect4 {
     mainWindow.setResizable(false);
     mainWindow.setVisible(true);
 
-    gbc = new GridBagConstraints(); 
-  gbc.weightx = 1;
-  gbc.weighty = 1;
+   gbc = new GridBagConstraints(); 
+ gbc.weightx = 1;
+ gbc.weighty = 1;
     gbc.fill = GridBagConstraints.VERTICAL; 
-    gbc.gridheight = 3; 
+   gbc.gridheight = 3; 
     //this line doesnt do anything for some reasion
     gbc.gridwidth = 1;
     
@@ -90,8 +90,8 @@ public class Connect4 {
     //this line isnt doing anything
     gbc.gridx = xPosition; 
 JButton columnButton = new JButton();
-//columnButton.setContentAreaFilled(false); 
-//columnButton.setBorderPainted(false);
+columnButton.setContentAreaFilled(false); 
+columnButton.setBorderPainted(false);
 columnButton.setVisible(true);   
 
     ImageIcon yellowPiece = new ImageIcon("YellowPiece-Photoroom.png");      
@@ -116,12 +116,6 @@ columnButton.addActionListener(new ActionListener() {
       boardPlacement.repaint();
 
 
-      
-      
-
-
-//When pressed, a piece will drop in the corresponding column. 
-
   }
   });
 
@@ -140,10 +134,27 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
     boardPanel = new JPanel();
     boardPanel.setLayout(null);
     boardPanel.setBackground(Color.WHITE);
-
+Color backgroundColor = boardPanel.getBackground();
+  instructionLabel.setBackground(backgroundColor);
         
         ImageIcon boardImg = new ImageIcon("board.png");
         
+        goBackImg = new ImageIcon("GoBack (1).png");
+
+resetButton = new JButton(goBackImg);
+resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    resetButton.setPreferredSize(new Dimension(200, 150));
+    resetButton.setVisible(true);
+    resetButton.setOpaque(true);
+    resetButton.setBounds(1150, 5, 100, 100);
+
+   resetButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Button clicked!");
+            //Should reset the board panel
+        }
+      });
 
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
@@ -152,6 +163,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+        boardPanel.add(resetButton); 
 
         //_1v1columnButton1 = boardButtons(1);
         //boardPanel.add(_1v1columnButton1, gbc);

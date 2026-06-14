@@ -54,10 +54,25 @@ public class Connect4 {
   JButton resetButton; 
   ImageIcon goBackImg; 
   JLabel chipPlacement;
+  ImageIcon yellowPiece; 
+  ImageIcon redPiece; 
+  int [][] board = new int [6][7]; 
+  boolean redTurn = true; 
+    int row; 
+   final int redPieceNum = 1; 
+    final int yellowPieceNum = 2; 
+    final int emptyPieceNum = 0;
+
+
 
 
   // The classes main constructor method
   public Connect4() {
+    for (int i = 0; i < board.length; i++) {
+    for (int j = 0; j < board[i].length; j++) {
+        board[i][j] = emptyPieceNum;
+    }
+}
     mainWindow = new JFrame("Connect4");
     mainWindow.setSize(1300, 1050);
     mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,9 +108,7 @@ public class Connect4 {
 JButton columnButton = new JButton();
 columnButton.setContentAreaFilled(false); 
 columnButton.setBorderPainted(false);
-columnButton.setVisible(true);   
-
-    ImageIcon yellowPiece = new ImageIcon("YellowPiece-Photoroom.png");      
+columnButton.setVisible(true);     
   
 
 columnButton.addActionListener(new ActionListener() {
@@ -149,17 +162,7 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     resetButton.setOpaque(true);
     resetButton.setBounds(1150, 5, 100, 100);
 
-   resetButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Button clicked!");
-            setUp1v1GamePanel(); 
-            _1v1gamePanel.repaint(); 
 
-
-            //Should reset the board panel
-        }
-      });
 
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
@@ -188,42 +191,93 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
       for (int i = 0; i < 7; i++) {
 
+       final int column = i;   
       JButton boardButtons = new JButton("67");
 
       boardButtons.setBounds(175 + (i * 135), 195, 135, 610);
   
 
       boardButtons.setOpaque(false);
-      boardButtons.setContentAreaFilled(false);
+      boardButtons.setContentAreaFilled(false); 
       boardButtons.setBorderPainted(false);
+  
+
       
 
+      boardPanel.add(boardButtons);
 
-      boardButtons.addActionListener(new ActionListener() {
+       boardButtons.addActionListener(new ActionListener() {   
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Button clicked!");
-           ImageIcon redPiece = new ImageIcon("RedPiece-Photoroom.png");
+          for (int r = 5; r >= 0; r--) {
+    if (board[r][column] == 0) {
+       row = r;
+        break;
+    }
+}
+      
+if (redTurn == true) { 
+            System.out.println("Red Button clicked!");
+           redPiece = new ImageIcon("RedPiece-Photoroom.png");
            chipPlacement = new JLabel(redPiece, SwingConstants.CENTER);
+           chipPlacement.setBounds(175 + (column * 135), 197 + (row * 99), 135, 100);
+    board[row][column] = redPieceNum; 
+           boardPanel.add(chipPlacement);
+           redTurn = false;
 
-           //chipPlacement.setBounds(175 + (i * 135), 195, 135, 100);
-           _1v1gamePanel.add(chipPlacement);
+          boardPanel.repaint();
+            for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println(); 
+        }
 
-          _1v1gamePanel.repaint();
+            }
+        else {
+
+            System.out.println("Yellow Button clicked!");
+           yellowPiece = new ImageIcon("YellowPiece-Photoroom.png");
+           chipPlacement = new JLabel(yellowPiece, SwingConstants.CENTER);
+           chipPlacement.setBounds(175 + (column * 135), 197 + (row * 99), 135, 100);
+
+           board[row][column] = yellowPieceNum; 
+           boardPanel.add(chipPlacement);
+           redTurn = true; 
+
+          boardPanel.repaint();
+            for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println(); 
+        }
+
+            }
+      }
+    });
+    }
+       resetButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Go Back Button clicked!");
+            _1v1gamePanel.removeAll(); 
+           // setUp1v1GamePanel();
+            _1v1gamePanel.revalidate(); 
+            _1v1gamePanel.repaint(); 
+
 
         }
       });
-
-      boardPanel.add(boardButtons);
 }
-       
+   
        
       
 
 
 
 
-  }
+  
 
   public void setUp1vAIGamePanel() {
     instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
@@ -260,6 +314,8 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
        //boardPanel.add(_1v1columnButton6, gbc);
        //_1v1columnButton7 = boardButtons(2);
        //boardPanel.add(_1v1columnButton7, gbc);
+
+      
 
 
       for (int i = 0; i < 7; i++) {
@@ -380,6 +436,7 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     buttonPanel.add(nameLabel); 
 
 
+  
   }
 
 
@@ -389,25 +446,25 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
  
 
   // Connect 4 Game Board Creation
-  char [][] board = new char[6][7];
+  //char [][] board = new char[6][7];
 
-  private void initializeBoard() {
-    for (int row = 0; row < 6; row++) {
-      for (int col = 0; col < 7; col++) {
-        board[row][col] = ' ';
-      }
-    }
-  }
+ // private void initializeBoard() {
+    //for (int row = 0; row < 6; row++) {
+      //for (int col = 0; col < 7; col++) {
+       // board[row][col] = ' ';
+     // }
+   // }
+  //}
 
   //Print the board using a 2d array that checks if it has reached the end of the row and column and prints the appropriate character. 
-  public static void printBoard(char[][] board) {
-    for (int row = 0; row < 6; row++) {
-      for (int col = 0; col < 7; col++) {
-        System.out.print(board[row][col] + " ");
-      }
-      System.out.println();
-    }
-  }
+  //public static void printBoard(char[][] board) {
+    //for (int row = 0; row < 6; row++) {
+      //for (int col = 0; col < 7; col++) {
+       // System.out.print(board[row][col] + " ");
+    //  }
+     // System.out.println();
+  //  }
+ // }
 
 
   public static void main(String[] args) {

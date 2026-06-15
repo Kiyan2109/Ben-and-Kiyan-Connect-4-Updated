@@ -1,3 +1,4 @@
+
 //Importing the necessary classes
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -52,7 +53,10 @@ public class Connect4 {
   ImageIcon redPiece; 
   int [][] board = new int [6][7]; 
   boolean redTurn = true; 
-    int row; 
+    int row = 6;
+    int column = 7; 
+    int r = 0;
+    int c = 0;
    final int redPieceNum = 1; 
     final int yellowPieceNum = 2; 
     final int emptyPieceNum = 0;
@@ -250,9 +254,49 @@ if (redTurn == true) {
         }
       });
 }
-   
+       
+      public boolean checkForWin(int player) {
+        for (int r = 0;  r < row; r++) {
+            for (int c = 0; c < column - 3; c++) {
+              if (board[r][c] == player && board[r][c+1] == player && board[r][c+2] == player && board[r][c+3] == player) {
+                return true;
+              }
+            }
+        }
        
       
+      
+        for (int r = 0; r < row - 3; r++) {
+          for (int c = 0; c < column; c++) {
+            if (board[r][c] == player && board[r+1][c] == player && board[r+2][c] == player && board[r+3][c] == player) {
+              return true;
+            }
+          }
+       }
+
+
+        for (int r = 0; r < row - 3; r++) {
+          for (int c = 0; c < column - 3; c++);
+            if (board[r][c] == player && board [r+1][c+1] == player && board[r+2][c+2] == player && board[r+3][c+3] == player) {
+              return true;
+            }
+       }
+
+        for (int r = 0; r < row; r++) {
+          for (int c = 0; c < column - 3; c++);
+            if (board[r][c] == player && board [r-1][c+1] == player && board[r-2][c+2] == player && board[r-3][c+3] == player) {
+              return true;
+       }
+      }
+
+      return false;
+      }
+
+
+       
+
+
+
 
 
 

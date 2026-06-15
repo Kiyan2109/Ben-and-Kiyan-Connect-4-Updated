@@ -39,19 +39,13 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
-  JLabel instructionLabel;
-  JButton _1v1columnButton1;
-  JButton _1v1columnButton2; 
-  JButton _1v1columnButton3; 
-  JButton _1v1columnButton4; 
-  JButton _1v1columnButton5; 
-  JButton _1v1columnButton6; 
-  JButton _1v1columnButton7;  
+  JLabel instructionLabel; 
   int getHeight = 0;
   int getWidth = 0;
   int BackgroundSize = 0;
-  GridBagConstraints gbc;
   JButton resetButton; 
+  JButton homeButton;
+  ImageIcon homeImg; 
   ImageIcon goBackImg; 
   JLabel chipPlacement;
   ImageIcon yellowPiece; 
@@ -79,13 +73,6 @@ public class Connect4 {
     mainWindow.setResizable(false);
     mainWindow.setVisible(true);
 
-   gbc = new GridBagConstraints(); 
- gbc.weightx = 1;
- gbc.weighty = 1;
-    gbc.fill = GridBagConstraints.VERTICAL; 
-   gbc.gridheight = 3; 
-    //this line doesnt do anything for some reasion
-    gbc.gridwidth = 1;
     
     setUpIntroPanel();
     mainWindow.add(introPanel, BorderLayout.PAGE_START);
@@ -101,43 +88,10 @@ public class Connect4 {
     
 
   }
-//Change the parameters to be a gridbaglayout
-  public JButton boardButtons(int xPosition) {
-    //this line isnt doing anything
-    gbc.gridx = xPosition; 
-JButton columnButton = new JButton();
-columnButton.setContentAreaFilled(false); 
-columnButton.setBorderPainted(false);
-columnButton.setVisible(true);     
-  
 
-columnButton.addActionListener(new ActionListener() {
-  @Override 
-  public void actionPerformed(ActionEvent evt) {
-    
-      ImageIcon redPiece = new ImageIcon("RedPiece-Photoroom.png");
-      System.out.println(redPiece.getIconWidth());
-
-      boardPlacement.setLayout(null);
-
-
-      JLabel redPiecePlacement = new JLabel(redPiece);
-      
-
-      //Doesn't show up yet, waiting for array values to equate the two. 
-      boardPlacement.add(redPiecePlacement);
-      boardPlacement.revalidate();
-      boardPlacement.repaint();
-
-
-  }
-  });
-
-return columnButton;
-}
 
 public void setUp1v1GamePanel() {
-instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
+instructionLabel = new JLabel("Click on a column to drop a piece. Turns will alternate between red and yellow. First to connect 4 wins!");
     instructionLabel.setHorizontalAlignment(JLabel.CENTER);
   instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24));
     _1v1gamePanel = new JPanel(new BorderLayout());
@@ -151,18 +105,21 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
 Color backgroundColor = boardPanel.getBackground();
   instructionLabel.setBackground(backgroundColor);
         
-        ImageIcon boardImg = new ImageIcon("board.png");
+        boardImg = new ImageIcon("board.png");
         
         goBackImg = new ImageIcon("GoBack (1).png");
-
 resetButton = new JButton(goBackImg);
 resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    resetButton.setPreferredSize(new Dimension(200, 150));
     resetButton.setVisible(true);
     resetButton.setOpaque(true);
     resetButton.setBounds(1150, 5, 100, 100);
 
-
+homeImg = new ImageIcon("homeIcon (1).png");
+homeButton = new JButton(homeImg);
+homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    homeButton.setVisible(true);
+    homeButton.setOpaque(true);
+    homeButton.setBounds(1050, 5, 100, 100);
 
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
@@ -172,6 +129,7 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
         boardPanel.add(resetButton); 
+        boardPanel.add(homeButton);
 
         //_1v1columnButton1 = boardButtons(1);
         //boardPanel.add(_1v1columnButton1, gbc);
@@ -261,10 +219,32 @@ if (redTurn == true) {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Go Back Button clicked!");
-            _1v1gamePanel.removeAll(); 
-           // setUp1v1GamePanel();
-            _1v1gamePanel.revalidate(); 
+           _1v1gamePanel.removeAll(); 
+           board = new int [6][7]; 
+            setUp1v1GamePanel();
+             _1v1gamePanel.revalidate(); 
             _1v1gamePanel.repaint(); 
+           
+           
+
+
+        }
+      });
+
+      homeButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Home Button clicked!");
+           // _1v1gamePanel.removeAll(); 
+            //setUp1v1GamePanel();
+             _1v1gamePanel.revalidate(); 
+            _1v1gamePanel.repaint(); 
+            _1v1gamePanel.setVisible(false);
+            boardPanel.setVisible(false);
+            introPanel.setVisible(true);
+            buttonPanel.setVisible(true);
+           
+           
 
 
         }
@@ -473,6 +453,3 @@ if (redTurn == true) {
 
 }
     
-
-//I wonder if this works. 
-//Entering this to commit.

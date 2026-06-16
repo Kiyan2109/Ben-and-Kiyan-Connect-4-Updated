@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 public class Connect4 {
   JFrame mainWindow;
@@ -40,19 +41,13 @@ public class Connect4 {
   JPanel boardPanel; 
   ImageIcon boardImg;
   JLabel boardPlacement;
-  JLabel instructionLabel;
-  JButton _1v1columnButton1;
-  JButton _1v1columnButton2; 
-  JButton _1v1columnButton3; 
-  JButton _1v1columnButton4; 
-  JButton _1v1columnButton5; 
-  JButton _1v1columnButton6; 
-  JButton _1v1columnButton7;  
+  JLabel instructionLabel; 
   int getHeight = 0;
   int getWidth = 0;
   int BackgroundSize = 0;
-  GridBagConstraints gbc;
   JButton resetButton; 
+  JButton homeButton;
+  ImageIcon homeImg; 
   ImageIcon goBackImg; 
   JLabel chipPlacement;
   ImageIcon yellowPiece; 
@@ -66,6 +61,12 @@ public class Connect4 {
    final int redPieceNum = 1; 
     final int yellowPieceNum = 2; 
     final int emptyPieceNum = 0;
+    int[][] winningCells = new int[4][2];
+    JLabel[][] chipLabels = new JLabel[6][7];
+    boolean gameOver = false;
+    
+
+
 
 
 
@@ -83,13 +84,6 @@ public class Connect4 {
     mainWindow.setResizable(false);
     mainWindow.setVisible(true);
 
-   gbc = new GridBagConstraints(); 
- gbc.weightx = 1;
- gbc.weighty = 1;
-    gbc.fill = GridBagConstraints.VERTICAL; 
-   gbc.gridheight = 3; 
-    //this line doesnt do anything for some reasion
-    gbc.gridwidth = 1;
     
     setUpIntroPanel();
     mainWindow.add(introPanel, BorderLayout.PAGE_START);
@@ -105,43 +99,10 @@ public class Connect4 {
     
 
   }
-//Change the parameters to be a gridbaglayout
-  public JButton boardButtons(int xPosition) {
-    //this line isnt doing anything
-    gbc.gridx = xPosition; 
-JButton columnButton = new JButton();
-columnButton.setContentAreaFilled(false); 
-columnButton.setBorderPainted(false);
-columnButton.setVisible(true);     
-  
 
-columnButton.addActionListener(new ActionListener() {
-  @Override 
-  public void actionPerformed(ActionEvent evt) {
-    
-      ImageIcon redPiece = new ImageIcon("RedPiece-Photoroom.png");
-      System.out.println(redPiece.getIconWidth());
-
-      boardPlacement.setLayout(null);
-
-
-      JLabel redPiecePlacement = new JLabel(redPiece);
-      
-
-      //Doesn't show up yet, waiting for array values to equate the two. 
-      boardPlacement.add(redPiecePlacement);
-      boardPlacement.revalidate();
-      boardPlacement.repaint();
-
-
-  }
-  });
-
-return columnButton;
-}
 
 public void setUp1v1GamePanel() {
-instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
+instructionLabel = new JLabel("Click on a column to drop a piece. Turns will alternate between red and yellow. First to connect 4 wins!");
     instructionLabel.setHorizontalAlignment(JLabel.CENTER);
   instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24));
     _1v1gamePanel = new JPanel(new BorderLayout());
@@ -155,18 +116,21 @@ instructionLabel = new JLabel("Click on a column to drop a piece. First to conne
 Color backgroundColor = boardPanel.getBackground();
   instructionLabel.setBackground(backgroundColor);
         
-        ImageIcon boardImg = new ImageIcon("board.png");
+        boardImg = new ImageIcon("board.png");
         
         goBackImg = new ImageIcon("GoBack (1).png");
-
 resetButton = new JButton(goBackImg);
 resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    resetButton.setPreferredSize(new Dimension(200, 150));
     resetButton.setVisible(true);
     resetButton.setOpaque(true);
     resetButton.setBounds(1150, 5, 100, 100);
 
-
+homeImg = new ImageIcon("homeIcon (1).png");
+homeButton = new JButton(homeImg);
+homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    homeButton.setVisible(true);
+    homeButton.setOpaque(true);
+    homeButton.setBounds(1050, 5, 100, 100);
 
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
@@ -176,27 +140,13 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
         boardPanel.add(resetButton); 
-
-        //_1v1columnButton1 = boardButtons(1);
-        //boardPanel.add(_1v1columnButton1, gbc);
-       //_1v1columnButton2 = boardButtons(2);
-              //boardPanel.add(_1v1columnButton2, gbc);
-       //_1v1columnButton3 = boardButtons(3);
-       //boardPanel.add(_1v1columnButton3, gbc);
-       //_1v1columnButton4 = boardButtons(4);
-        //boardPanel.add(_1v1columnButton4, gbc);
-       //_1v1columnButton5 = boardButtons(5);
-       //boardPanel.add(_1v1columnButton5, gbc);
-       //_1v1columnButton6 = boardButtons(6);
-       //boardPanel.add(_1v1columnButton6, gbc);
-       //_1v1columnButton7 = boardButtons(2);
-       //boardPanel.add(_1v1columnButton7, gbc);
+        boardPanel.add(homeButton);
 
 
       for (int i = 0; i < 7; i++) {
 
        final int column = i;   
-      JButton boardButtons = new JButton("67");
+      JButton boardButtons = new JButton("");
 
       boardButtons.setBounds(175 + (i * 135), 195, 135, 610);
   
@@ -213,21 +163,41 @@ resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
        boardButtons.addActionListener(new ActionListener() {   
         @Override
         public void actionPerformed(ActionEvent e) {
+
+             if (gameOver) {
+            System.out.println("Game is over. No more moves allowed.");
+            return;
+        }
+
+
+
+
+
           for (int r = 5; r >= 0; r--) {
-    if (board[r][column] == 0) {
+       if (board[r][column] == 0) {
        row = r;
         break;
     }
-}
-      
+} 
+        
 if (redTurn == true) { 
             System.out.println("Red Button clicked!");
            redPiece = new ImageIcon("RedPiece-Photoroom.png");
            chipPlacement = new JLabel(redPiece, SwingConstants.CENTER);
            chipPlacement.setBounds(175 + (column * 135), 197 + (row * 99), 135, 100);
-    board[row][column] = redPieceNum; 
+          chipLabels[row][column] = chipPlacement;
+          board[row][column] = redPieceNum;  
            boardPanel.add(chipPlacement);
-           redTurn = false;
+            
+           
+          if (checkForWin(redPieceNum)) {
+          System.out.println("Red wins!");
+          winningPieceFlourish();
+          gameOver = true;
+          
+          }
+        
+          redTurn = false;
 
           boardPanel.repaint();
             for (int i = 0; i < board.length; i++) {
@@ -244,9 +214,19 @@ if (redTurn == true) {
            yellowPiece = new ImageIcon("YellowPiece-Photoroom.png");
            chipPlacement = new JLabel(yellowPiece, SwingConstants.CENTER);
            chipPlacement.setBounds(175 + (column * 135), 197 + (row * 99), 135, 100);
+           chipLabels[row][column] = chipPlacement;
 
            board[row][column] = yellowPieceNum; 
            boardPanel.add(chipPlacement);
+
+           if (checkForWin(yellowPieceNum)) {
+            System.out.println("Yellow wins!");
+            winningPieceFlourish();
+            gameOver = true;
+            
+            
+           }
+
            redTurn = true; 
 
           boardPanel.repaint();
@@ -265,10 +245,35 @@ if (redTurn == true) {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Go Back Button clicked!");
-            _1v1gamePanel.removeAll(); 
-           // setUp1v1GamePanel();
-            _1v1gamePanel.revalidate(); 
+           _1v1gamePanel.removeAll(); 
+           board = new int [6][7];                
+          
+            setUp1v1GamePanel();
+             _1v1gamePanel.revalidate();  
             _1v1gamePanel.repaint(); 
+
+
+           
+
+
+        }
+      });
+
+      homeButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Home Button clicked!");
+           // _1v1gamePanel.removeAll(); 
+            //setUp1v1GamePanel();
+             _1v1gamePanel.revalidate(); 
+            _1v1gamePanel.repaint(); 
+            _1v1gamePanel.setVisible(false);
+            boardPanel.setVisible(false);
+            introPanel.setVisible(true);
+            buttonPanel.setVisible(true);
+            
+           
+           
 
 
         }
@@ -276,41 +281,124 @@ if (redTurn == true) {
 }
        
       public boolean checkForWin(int player) {
-        for (int r = 0;  r < row; r++) {
-            for (int c = 0; c < column - 3; c++) {
+        for (int r = 0;  r < board.length; r++) {
+            for (int c = 0; c < board[0].length - 3; c++) {
               if (board[r][c] == player && board[r][c+1] == player && board[r][c+2] == player && board[r][c+3] == player) {
+                
+
+                winningCells[0] = new int[]{r, c};
+                winningCells[1] = new int[]{r, c+1};
+                winningCells[2] = new int[]{r, c+2};
+                winningCells[3] = new int[]{r, c+3};
+
                 return true;
+                
+                 
               }
             }
         }
        
       
       
-        for (int r = 0; r < row - 3; r++) {
-          for (int c = 0; c < column; c++) {
+        for (int r = 0; r < board.length - 3; r++) {
+          for (int c = 0; c < board[0].length; c++) {
             if (board[r][c] == player && board[r+1][c] == player && board[r+2][c] == player && board[r+3][c] == player) {
+
+              winningCells[0] = new int[]{r, c};
+              winningCells[1] = new int[]{r+1, c};
+              winningCells[2] = new int[]{r+2, c};
+              winningCells[3] = new int[]{r+3, c};
+
               return true;
             }
           }
        }
 
 
-        for (int r = 0; r < row - 3; r++) {
-          for (int c = 0; c < column - 3; c++);
+        for (int r = 0; r < board.length - 3; r++) {
+          for (int c = 0; c < board[0].length - 3; c++) {
             if (board[r][c] == player && board [r+1][c+1] == player && board[r+2][c+2] == player && board[r+3][c+3] == player) {
+
+              winningCells[0] = new int[]{r, c};
+              winningCells[1] = new int[]{r+1, c+1};
+              winningCells[2] = new int[]{r+2, c+2};
+              winningCells[3] = new int[]{r+3, c+3};
+
               return true;
             }
+          }
        }
 
-        for (int r = 0; r < row; r++) {
-          for (int c = 0; c < column - 3; c++);
+        for (int r = 3; r < board.length; r++) {
+          for (int c = 0; c < board[0].length - 3; c++){
             if (board[r][c] == player && board [r-1][c+1] == player && board[r-2][c+2] == player && board[r-3][c+3] == player) {
+
+              winningCells[0] = new int[]{r, c};
+              winningCells[1] = new int[]{r-1, c+1};
+              winningCells[2] = new int[]{r-2, c+2};
+              winningCells[3] = new int[]{r-3, c+3};
+
               return true;
        }
+      }
       }
 
       return false;
       }
+
+
+
+
+
+
+
+
+
+public void winningPieceFlourish() {
+
+  Timer winningTimer = new Timer(300, null);
+
+    
+
+  winningTimer.addActionListener(new ActionListener() {
+
+    
+
+    boolean visible = true;
+    int count = 0;
+
+    @Override 
+    public void actionPerformed(ActionEvent e) {
+
+      visible = !visible;
+
+       for (int i = 0; i < 4; i++) {
+          int r = winningCells[i][0];
+          int c = winningCells[i][1];
+        
+          chipLabels[r][c].setVisible(visible);
+        }
+
+        count++;
+
+        if (count >= 10) {
+          winningTimer.stop();
+
+          for (int i = 0; i < 4; i++) {
+
+            int r = winningCells[i][0];
+            int c = winningCells[i][1];
+        
+          chipLabels[r][c].setVisible(true);
+          }
+    }
+    }
+  });
+
+  winningTimer.start();
+
+  if (gameOver || winningTimer != null) return;
+}
 
 
        
@@ -344,27 +432,14 @@ if (redTurn == true) {
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
 
-        //_1v1columnButton1 = boardButtons(1);
-        //boardPanel.add(_1v1columnButton1, gbc);
-       //_1v1columnButton2 = boardButtons(2);
-              //boardPanel.add(_1v1columnButton2, gbc);
-       //_1v1columnButton3 = boardButtons(3);
-       //boardPanel.add(_1v1columnButton3, gbc);
-       //_1v1columnButton4 = boardButtons(4);
-        //boardPanel.add(_1v1columnButton4, gbc);
-       //_1v1columnButton5 = boardButtons(5);
-       //boardPanel.add(_1v1columnButton5, gbc);
-       //_1v1columnButton6 = boardButtons(6);
-       //boardPanel.add(_1v1columnButton6, gbc);
-       //_1v1columnButton7 = boardButtons(2);
-       //boardPanel.add(_1v1columnButton7, gbc);
+
 
       
 
 
       for (int i = 0; i < 7; i++) {
 
-      JButton boardButtons = new JButton("67");
+      JButton boardButtons = new JButton("");
 
       boardButtons.setBounds(175 + (i * 135), 195, 135, 610);
   
@@ -484,39 +559,9 @@ if (redTurn == true) {
   }
 
 
-  
-  
-
- 
-
-  // Connect 4 Game Board Creation
-  //char [][] board = new char[6][7];
-
- // private void initializeBoard() {
-    //for (int row = 0; row < 6; row++) {
-      //for (int col = 0; col < 7; col++) {
-       // board[row][col] = ' ';
-     // }
-   // }
-  //}
-
-  //Print the board using a 2d array that checks if it has reached the end of the row and column and prints the appropriate character. 
-  //public static void printBoard(char[][] board) {
-    //for (int row = 0; row < 6; row++) {
-      //for (int col = 0; col < 7; col++) {
-       // System.out.print(board[row][col] + " ");
-    //  }
-     // System.out.println();
-  //  }
- // }
-
-
   public static void main(String[] args) {
     new Connect4();
   }
 
 }
     
-
-//I wonder if this works. 
-//Entering this to commit.

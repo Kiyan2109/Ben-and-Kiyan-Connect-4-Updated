@@ -298,6 +298,7 @@ gameOver = false;
             introPanel.setVisible(true);
             buttonPanel.setVisible(true);
             
+            
            
            
 
@@ -559,6 +560,8 @@ public void winningPieceFlourish() {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
           _1v1gamePanel.setVisible(true);
+          boardPanel.setVisible(true);
+          
           
       }
     });
@@ -569,6 +572,7 @@ public void winningPieceFlourish() {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
           _1v1gamePanel.setVisible(true);
+          boardPanel.setVisible(true);
 
       }
     });

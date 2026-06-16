@@ -39,6 +39,7 @@ public class Connect4 {
   JLabel nameLabel; 
   JPanel namePanel; 
   JPanel boardPanel; 
+  JPanel aigamePanel;
   ImageIcon boardImg;
   JLabel boardPlacement;
   JLabel instructionLabel; 
@@ -64,6 +65,8 @@ public class Connect4 {
     int[][] winningCells = new int[4][2];
     JLabel[][] chipLabels = new JLabel[6][7];
     boolean gameOver = false;
+
+
     
 
 
@@ -427,25 +430,19 @@ public void winningPieceFlourish() {
 }
 
 
-       
-
-
-
-
-
-
-
-  
+      
 
   public void setUp1vAIGamePanel() {
     instructionLabel = new JLabel("Click on a column to drop a piece. First to connect 4 wins!");
     instructionLabel.setHorizontalAlignment(JLabel.CENTER);
     instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24)); 
-    _1v1gamePanel = new JPanel(new BorderLayout());
-    _1v1gamePanel.setSize(1300, 1050);
-    _1v1gamePanel.setVisible(false);
-    boardPanel = new JPanel(new GridBagLayout()); 
-        boardPanel.setBackground(Color.WHITE);
+    _1vAIgamePanel = new JPanel(new BorderLayout());
+    _1vAIgamePanel.setSize(1300, 1050);
+    _1vAIgamePanel.setVisible(false);
+    aigamePanel = new JPanel();
+        aigamePanel.setLayout(null);
+        aigamePanel.setBackground(Color.WHITE);
+      
         
         ImageIcon boardImg = new ImageIcon("board.png");
         
@@ -454,36 +451,37 @@ public void winningPieceFlourish() {
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
         boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
         boardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
-        boardPanel.add(boardPlacement);
-        _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
-        _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+        aigamePanel.add(boardPlacement);
 
 
+        _1vAIgamePanel.add(aigamePanel, BorderLayout.CENTER);
+        _1vAIgamePanel.add(instructionLabel, BorderLayout.PAGE_START);
 
-      
+
+        
 
 
       for (int i = 0; i < 7; i++) {
 
-      JButton boardButtons = new JButton("");
+      JButton aiboardButtons = new JButton("");
 
-      boardButtons.setBounds(175 + (i * 135), 195, 135, 610);
+      aiboardButtons.setBounds(175 + (i * 135), 195, 135, 610);
   
 
-      boardButtons.setOpaque(false);
-      boardButtons.setContentAreaFilled(false);
-      boardButtons.setBorderPainted(false);
+      aiboardButtons.setOpaque(false);
+      aiboardButtons.setContentAreaFilled(false);
+      aiboardButtons.setBorderPainted(false);
       
       
 
-      boardButtons.addActionListener(new ActionListener() {
+      aiboardButtons.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Button clicked!");
         }
       });
 
-      boardPanel.add(boardButtons);
+      aigamePanel.add(aiboardButtons);
     }
   }
   
@@ -558,7 +556,8 @@ public void winningPieceFlourish() {
       public void actionPerformed(ActionEvent evt) {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
-          _1v1gamePanel.setVisible(true);
+          _1vAIgamePanel.setVisible(true);
+          _1v1gamePanel.setVisible(false);
           
       }
     });
@@ -569,6 +568,7 @@ public void winningPieceFlourish() {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
           _1v1gamePanel.setVisible(true);
+          _1vAIgamePanel.setVisible(false);
 
       }
     });
@@ -590,8 +590,5 @@ public void winningPieceFlourish() {
   }
 
 }
-<<<<<<< HEAD
     
-=======
     
->>>>>>> 383b20094d9b6ed7be990a8a8ce9a2b716dd3f1b

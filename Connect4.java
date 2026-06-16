@@ -100,50 +100,8 @@ public class Connect4 {
 
   }
 
-
-public void setUp1v1GamePanel() {
-instructionLabel = new JLabel("Click on a column to drop a piece. Turns will alternate between red and yellow. First to connect 4 wins!");
-    instructionLabel.setHorizontalAlignment(JLabel.CENTER);
-  instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24));
-    _1v1gamePanel = new JPanel(new BorderLayout());
-    _1v1gamePanel.setSize(1300, 1050);
-    _1v1gamePanel.setVisible(false);
-
-    
-    boardPanel = new JPanel();
-    boardPanel.setLayout(null);
-    boardPanel.setBackground(Color.WHITE);
-Color backgroundColor = boardPanel.getBackground();
-  instructionLabel.setBackground(backgroundColor);
-        
-        boardImg = new ImageIcon("board.png");
-        
-        goBackImg = new ImageIcon("GoBack (1).png");
-resetButton = new JButton(goBackImg);
-resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    resetButton.setVisible(true);
-    resetButton.setOpaque(true);
-    resetButton.setBounds(1150, 5, 100, 100);
-
-homeImg = new ImageIcon("homeIcon (1).png");
-homeButton = new JButton(homeImg);
-homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    homeButton.setVisible(true);
-    homeButton.setOpaque(true);
-    homeButton.setBounds(1050, 5, 100, 100);
-
-        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
-        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
-        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
-        boardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
-        boardPanel.add(boardPlacement);
-        _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
-        _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
-        boardPanel.add(resetButton); 
-        boardPanel.add(homeButton);
-
-
-      for (int i = 0; i < 7; i++) {
+public void setUpBoardButtons() {      
+  for (int i = 0; i < 7; i++) {
 
        final int column = i;   
       JButton boardButtons = new JButton("");
@@ -241,16 +199,73 @@ if (redTurn == true) {
       }
     });
     }
+  }
+
+
+public void setUp1v1GamePanel() {
+instructionLabel = new JLabel("Click on a column to drop a piece. Turns will alternate between red and yellow. First to connect 4 wins!");
+    instructionLabel.setHorizontalAlignment(JLabel.CENTER);
+  instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24));
+    _1v1gamePanel = new JPanel(new BorderLayout());
+    _1v1gamePanel.setSize(1300, 1050);
+    _1v1gamePanel.setVisible(false);
+
+    
+    boardPanel = new JPanel();
+    boardPanel.setLayout(null);
+    boardPanel.setBackground(Color.WHITE);
+Color backgroundColor = boardPanel.getBackground();
+  instructionLabel.setBackground(backgroundColor);
+        
+        boardImg = new ImageIcon("board.png");
+        
+        goBackImg = new ImageIcon("GoBack (1).png");
+resetButton = new JButton(goBackImg);
+resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    resetButton.setVisible(true);
+    resetButton.setOpaque(true);
+    resetButton.setBounds(1150, 5, 100, 100);
+
+homeImg = new ImageIcon("homeIcon (1).png");
+homeButton = new JButton(homeImg);
+homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    homeButton.setVisible(true);
+    homeButton.setOpaque(true);
+    homeButton.setBounds(1050, 5, 100, 100);
+
+        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
+        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
+        boardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
+        boardPanel.add(boardPlacement);
+        _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
+        _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+        boardPanel.add(resetButton); 
+        boardPanel.add(homeButton);
+setUpBoardButtons(); 
+
+
+    
+
        resetButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Go Back Button clicked!");
-           _1v1gamePanel.removeAll(); 
-           board = new int [6][7];                
-          
-            setUp1v1GamePanel();
-             _1v1gamePanel.revalidate();  
-            _1v1gamePanel.repaint(); 
+           boardPanel.removeAll(); 
+           for (int i = 0; i < board.length; i++) {
+    for (int j = 0; j < board[i].length; j++) {
+        board[i][j] = emptyPieceNum;
+    }
+}
+gameOver = false; 
+             boardPanel.revalidate();  
+            boardPanel.repaint(); 
+            setUpBoardButtons();
+            boardPanel.add(resetButton); 
+        boardPanel.add(homeButton);
+        boardPanel.add(boardPlacement);
+        boardPanel.revalidate();  
+            boardPanel.repaint(); 
 
 
            
@@ -263,10 +278,21 @@ if (redTurn == true) {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Home Button clicked!");
-           // _1v1gamePanel.removeAll(); 
-            //setUp1v1GamePanel();
-             _1v1gamePanel.revalidate(); 
-            _1v1gamePanel.repaint(); 
+           boardPanel.removeAll(); 
+           for (int i = 0; i < board.length; i++) {
+    for (int j = 0; j < board[i].length; j++) {
+        board[i][j] = emptyPieceNum;
+    }
+}
+gameOver = false; 
+             boardPanel.revalidate();  
+            boardPanel.repaint(); 
+            setUpBoardButtons();
+            boardPanel.add(resetButton); 
+        boardPanel.add(homeButton);
+        boardPanel.add(boardPlacement);
+        boardPanel.revalidate();  
+            boardPanel.repaint(); 
             _1v1gamePanel.setVisible(false);
             boardPanel.setVisible(false);
             introPanel.setVisible(true);
@@ -564,8 +590,4 @@ public void winningPieceFlourish() {
   }
 
 }
-<<<<<<< HEAD
     
-=======
-    
->>>>>>> 383b20094d9b6ed7be990a8a8ce9a2b716dd3f1b

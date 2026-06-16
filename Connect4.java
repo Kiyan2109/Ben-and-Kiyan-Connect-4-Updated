@@ -301,6 +301,7 @@ gameOver = false;
             introPanel.setVisible(true);
             buttonPanel.setVisible(true);
             
+            
            
            
 
@@ -556,8 +557,14 @@ public void winningPieceFlourish() {
       public void actionPerformed(ActionEvent evt) {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
+<<<<<<< HEAD
           _1vAIgamePanel.setVisible(true);
           _1v1gamePanel.setVisible(false);
+=======
+          _1v1gamePanel.setVisible(true);
+          boardPanel.setVisible(true);
+          
+>>>>>>> 33f5edec6063e4d61a14f19bf8012125f97a47c3
           
       }
     });
@@ -568,7 +575,11 @@ public void winningPieceFlourish() {
        introPanel.setVisible(false);
           buttonPanel.setVisible(false);
           _1v1gamePanel.setVisible(true);
+<<<<<<< HEAD
           _1vAIgamePanel.setVisible(false);
+=======
+          boardPanel.setVisible(true);
+>>>>>>> 33f5edec6063e4d61a14f19bf8012125f97a47c3
 
       }
     });

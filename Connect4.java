@@ -476,6 +476,9 @@ _AIhomeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     _AIhomeButton.setBounds(1050, 5, 100, 100);
 
 
+    
+
+
     aigamePanel.add(_AIresetButton);
 aigamePanel.add(_AIhomeButton);
 
@@ -517,10 +520,58 @@ aigamePanel.add(_AIhomeButton);
         }
       });
       }
-    }
 
 
-  
+      _AIresetButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            System.out.println("AI Reset clicked!");
+
+            aigamePanel.removeAll();
+
+            for (int r = 0; r < board.length; r++) {
+                for (int c = 0; c < board[r].length; c++) {
+                    board[r][c] = emptyPieceNum;
+                    chipLabels[r][c] = null;
+                }
+            }
+
+            gameOver = false; 
+             aigamePanel.revalidate();  
+            aigamePanel.repaint(); 
+            aigamePanel.add(_AIresetButton); 
+        aigamePanel.add(_AIhomeButton);
+        aigamePanel.add(boardPlacement);
+        aigamePanel.revalidate();  
+            aigamePanel.repaint(); 
+
+
+          
+        }
+    });
+
+    _AIhomeButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            System.out.println("AI Home clicked!");
+
+            for (int r = 0; r < board.length; r++) {
+                for (int c = 0; c < board[r].length; c++) {
+                    board[r][c] = emptyPieceNum;
+                    chipLabels[r][c] = null;
+                }
+            }
+
+        }
+    });
+}
+
+
+
+
+
   // Setting up the intro panel
   public void setUpIntroPanel() {
     introPanel = new JPanel(new BorderLayout());
@@ -629,6 +680,10 @@ aigamePanel.add(_AIhomeButton);
   
   }
 
+
+
+
+  
 
   public static void main(String[] args) {
     new Connect4();

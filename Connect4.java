@@ -439,7 +439,6 @@ public void winningPieceFlourish() {
     instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24)); 
     _1vAIgamePanel = new JPanel(new BorderLayout());
     _1vAIgamePanel.setSize(1300, 1050);
-    _1vAIgamePanel.setVisible(false);
     aigamePanel = new JPanel();
         aigamePanel.setLayout(null);
         aigamePanel.setBackground(Color.WHITE);

@@ -508,7 +508,7 @@ aigamePanel.add(_AIhomeButton);
       aiboardButtons.setContentAreaFilled(false);
       aiboardButtons.setBorderPainted(false);
       
-      
+      aigamePanel.add(aiboardButtons);
 
       aiboardButtons.addActionListener(new ActionListener() {
         @Override

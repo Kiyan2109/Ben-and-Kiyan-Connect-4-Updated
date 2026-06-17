@@ -48,8 +48,10 @@ public class Connect4 {
   int getHeight = 0;
   int getWidth = 0;
   int BackgroundSize = 0;
-  JButton resetButton; 
-  JButton homeButton;
+  JButton _1v1resetButton; 
+  JButton _AIresetButton;
+  JButton _1v1homeButton;
+  JButton _AIhomeButton;
   ImageIcon homeImg; 
   ImageIcon goBackImg; 
   JLabel chipPlacement;
@@ -231,18 +233,18 @@ Color backgroundColor = boardPanel.getBackground();
         boardImg = new ImageIcon("board.png");
         
         goBackImg = new ImageIcon("GoBack (1).png");
-resetButton = new JButton(goBackImg);
-resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    resetButton.setVisible(true);
-    resetButton.setOpaque(true);
-    resetButton.setBounds(1150, 5, 100, 100);
+_1v1resetButton = new JButton(goBackImg);
+_1v1resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    _1v1resetButton.setVisible(true);
+    _1v1resetButton.setOpaque(true);
+    _1v1resetButton.setBounds(1150, 5, 100, 100);
 
 homeImg = new ImageIcon("homeIcon (1).png");
-homeButton = new JButton(homeImg);
-homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    homeButton.setVisible(true);
-    homeButton.setOpaque(true);
-    homeButton.setBounds(1050, 5, 100, 100);
+_1v1homeButton = new JButton(homeImg);
+_1v1homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    _1v1homeButton.setVisible(true);
+    _1v1homeButton.setOpaque(true);
+    _1v1homeButton.setBounds(1050, 5, 100, 100);
 
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
@@ -251,14 +253,14 @@ homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
-        boardPanel.add(resetButton); 
-        boardPanel.add(homeButton);
+        boardPanel.add(_1v1resetButton); 
+        boardPanel.add(_1v1homeButton);
         setUpBoardButtons(); 
 
 
     
 
-       resetButton.addActionListener(new ActionListener() {
+       _1v1resetButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Go Back Button clicked!");
@@ -272,8 +274,8 @@ gameOver = false;
              boardPanel.revalidate();  
             boardPanel.repaint(); 
             setUpBoardButtons();
-            boardPanel.add(resetButton); 
-        boardPanel.add(homeButton);
+            boardPanel.add(_1v1resetButton); 
+        boardPanel.add(_1v1homeButton);
         boardPanel.add(boardPlacement);
         boardPanel.revalidate();  
             boardPanel.repaint(); 
@@ -285,7 +287,7 @@ gameOver = false;
         }
       });
 
-      homeButton.addActionListener(new ActionListener() {
+      _1v1homeButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Home Button clicked!");
@@ -306,8 +308,8 @@ gameOver = false;
              boardPanel.revalidate();  
             boardPanel.repaint(); 
             setUpBoardButtons();
-            boardPanel.add(resetButton); 
-        boardPanel.add(homeButton);
+            boardPanel.add(_1v1resetButton); 
+        boardPanel.add(_1v1homeButton);
         boardPanel.add(boardPlacement);
         boardPanel.revalidate();  
             boardPanel.repaint(); 
@@ -459,6 +461,25 @@ public void winningPieceFlourish() {
         aigamePanel.setBackground(Color.WHITE);
       
         
+      goBackImg = new ImageIcon("GoBack (1).png");
+_AIresetButton = new JButton(goBackImg);
+_AIresetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    _AIresetButton.setVisible(true);
+    _AIresetButton.setOpaque(true);
+    _AIresetButton.setBounds(1150, 5, 100, 100);
+
+homeImg = new ImageIcon("homeIcon (1).png");
+_AIhomeButton = new JButton(homeImg);
+_AIhomeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    _AIhomeButton.setVisible(true);
+    _AIhomeButton.setOpaque(true);
+    _AIhomeButton.setBounds(1050, 5, 100, 100);
+
+
+    aigamePanel.add(_AIresetButton);
+aigamePanel.add(_AIhomeButton);
+
+
         ImageIcon boardImg = new ImageIcon("board.png");
         
 
@@ -495,10 +516,10 @@ public void winningPieceFlourish() {
             System.out.println("Button clicked!");
         }
       });
-
-      aigamePanel.add(aiboardButtons);
+      }
     }
-  }
+
+
   
   // Setting up the intro panel
   public void setUpIntroPanel() {
@@ -571,6 +592,9 @@ public void winningPieceFlourish() {
       public void actionPerformed(ActionEvent evt) {
          introPanel.setVisible(false);
         buttonPanel.setVisible(false);
+        boardPanel.setVisible(true);
+       
+        
 
         gameContainer.setVisible(true);
 
@@ -585,6 +609,7 @@ public void winningPieceFlourish() {
       public void actionPerformed(ActionEvent evt) {
        introPanel.setVisible(false);
         buttonPanel.setVisible(false);
+        boardPanel.setVisible(true);
 
         gameContainer.setVisible(true);
 

@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.GridBagLayout;
+import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -43,6 +44,7 @@ public class Connect4 {
   ImageIcon boardImg;
   JLabel boardPlacement;
   JLabel instructionLabel; 
+  JPanel gameContainer;
   int getHeight = 0;
   int getWidth = 0;
   int BackgroundSize = 0;
@@ -81,26 +83,30 @@ public class Connect4 {
         board[i][j] = emptyPieceNum;
     }
 }
-    mainWindow = new JFrame("Connect4");
-    mainWindow.setSize(1300, 1050);
-    mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    mainWindow.setResizable(false);
-    mainWindow.setVisible(true);
+   mainWindow = new JFrame("Connect4");
+mainWindow.setSize(1300, 1050);
+mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+mainWindow.setResizable(false);
 
-    
-    setUpIntroPanel();
-    mainWindow.add(introPanel, BorderLayout.PAGE_START);
+setUpIntroPanel();
+mainWindow.add(introPanel, BorderLayout.PAGE_START);
 
-    setUpButtonPanel();
-      mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
+setUp1v1GamePanel();
+setUp1vAIGamePanel();
 
-  setUp1vAIGamePanel();
-      mainWindow.add(_1v1gamePanel, BorderLayout.CENTER);
+gameContainer = new JPanel(new CardLayout());
 
-      setUp1v1GamePanel();
-      mainWindow.add(_1v1gamePanel, BorderLayout.CENTER);
-    
+gameContainer.add(_1v1gamePanel, "1V1");
+gameContainer.add(_1vAIgamePanel, "AI");
 
+gameContainer.setVisible(false);
+
+mainWindow.add(gameContainer, BorderLayout.CENTER);
+
+setUpButtonPanel();
+mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
+
+mainWindow.setVisible(true);
   }
 
 public void setUpBoardButtons() {      
@@ -115,6 +121,8 @@ public void setUpBoardButtons() {
       boardButtons.setOpaque(false);
       boardButtons.setContentAreaFilled(false); 
       boardButtons.setBorderPainted(false);
+
+
   
 
       
@@ -211,7 +219,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. Turns will alt
   instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24));
     _1v1gamePanel = new JPanel(new BorderLayout());
     _1v1gamePanel.setSize(1300, 1050);
-    _1v1gamePanel.setVisible(false);
+    
 
     
     boardPanel = new JPanel();
@@ -245,7 +253,7 @@ homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
         boardPanel.add(resetButton); 
         boardPanel.add(homeButton);
-setUpBoardButtons(); 
+        setUpBoardButtons(); 
 
 
     
@@ -285,7 +293,14 @@ gameOver = false;
            for (int i = 0; i < board.length; i++) {
     for (int j = 0; j < board[i].length; j++) {
         board[i][j] = emptyPieceNum;
+
+        
     }
+
+    gameContainer.setVisible(false);
+
+        introPanel.setVisible(true);
+        buttonPanel.setVisible(true);
 }
 gameOver = false; 
              boardPanel.revalidate();  
@@ -439,7 +454,6 @@ public void winningPieceFlourish() {
     instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24)); 
     _1vAIgamePanel = new JPanel(new BorderLayout());
     _1vAIgamePanel.setSize(1300, 1050);
-    _1vAIgamePanel.setVisible(false);
     aigamePanel = new JPanel();
         aigamePanel.setLayout(null);
         aigamePanel.setBackground(Color.WHITE);
@@ -555,16 +569,13 @@ public void winningPieceFlourish() {
     singlePlayerButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent evt) {
-       introPanel.setVisible(false);
-          buttonPanel.setVisible(false);
-<<<<<<< HEAD
-          _1vAIgamePanel.setVisible(true);
-          _1v1gamePanel.setVisible(false);
-=======
-          _1v1gamePanel.setVisible(true);
-          boardPanel.setVisible(true);
-          
->>>>>>> 33f5edec6063e4d61a14f19bf8012125f97a47c3
+         introPanel.setVisible(false);
+        buttonPanel.setVisible(false);
+
+        gameContainer.setVisible(true);
+
+        CardLayout cl = (CardLayout) gameContainer.getLayout();
+        cl.show(gameContainer, "AI");
           
       }
     });
@@ -573,14 +584,12 @@ public void winningPieceFlourish() {
       @Override
       public void actionPerformed(ActionEvent evt) {
        introPanel.setVisible(false);
-          buttonPanel.setVisible(false);
-          _1v1gamePanel.setVisible(true);
-<<<<<<< HEAD
-          _1vAIgamePanel.setVisible(false);
-=======
-          boardPanel.setVisible(true);
->>>>>>> 33f5edec6063e4d61a14f19bf8012125f97a47c3
+        buttonPanel.setVisible(false);
 
+        gameContainer.setVisible(true);
+
+        CardLayout cl = (CardLayout) gameContainer.getLayout();
+        cl.show(gameContainer, "1V1");
       }
     });
 

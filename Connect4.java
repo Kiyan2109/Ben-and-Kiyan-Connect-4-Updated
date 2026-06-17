@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.GridBagLayout;
+import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -43,11 +44,14 @@ public class Connect4 {
   ImageIcon boardImg;
   JLabel boardPlacement;
   JLabel instructionLabel; 
+  JPanel gameContainer;
   int getHeight = 0;
   int getWidth = 0;
   int BackgroundSize = 0;
-  JButton resetButton; 
-  JButton homeButton;
+  JButton _1v1resetButton; 
+  JButton _AIresetButton;
+  JButton _1v1homeButton;
+  JButton _AIhomeButton;
   ImageIcon homeImg; 
   ImageIcon goBackImg; 
   JLabel chipPlacement;
@@ -81,26 +85,30 @@ public class Connect4 {
         board[i][j] = emptyPieceNum;
     }
 }
-    mainWindow = new JFrame("Connect4");
-    mainWindow.setSize(1300, 1050);
-    mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    mainWindow.setResizable(false);
-    mainWindow.setVisible(true);
+   mainWindow = new JFrame("Connect4");
+mainWindow.setSize(1300, 1050);
+mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+mainWindow.setResizable(false);
 
-    
-    setUpIntroPanel();
-    mainWindow.add(introPanel, BorderLayout.PAGE_START);
+setUpIntroPanel();
+mainWindow.add(introPanel, BorderLayout.PAGE_START);
 
-    setUpButtonPanel();
-      mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
+setUp1v1GamePanel();
+setUp1vAIGamePanel();
 
-  setUp1vAIGamePanel();
-      mainWindow.add(_1v1gamePanel, BorderLayout.CENTER);
+gameContainer = new JPanel(new CardLayout());
 
-      setUp1v1GamePanel();
-      mainWindow.add(_1v1gamePanel, BorderLayout.CENTER);
-    
+gameContainer.add(_1v1gamePanel, "1V1");
+gameContainer.add(_1vAIgamePanel, "AI");
 
+gameContainer.setVisible(false);
+
+mainWindow.add(gameContainer, BorderLayout.CENTER);
+
+setUpButtonPanel();
+mainWindow.add(buttonPanel, BorderLayout.PAGE_END);
+
+mainWindow.setVisible(true);
   }
 
 public void setUpBoardButtons() {      
@@ -115,6 +123,8 @@ public void setUpBoardButtons() {
       boardButtons.setOpaque(false);
       boardButtons.setContentAreaFilled(false); 
       boardButtons.setBorderPainted(false);
+
+
   
 
       
@@ -211,7 +221,7 @@ instructionLabel = new JLabel("Click on a column to drop a piece. Turns will alt
   instructionLabel.setFont(new Font("Sans_Serif", Font.BOLD, 24));
     _1v1gamePanel = new JPanel(new BorderLayout());
     _1v1gamePanel.setSize(1300, 1050);
-    _1v1gamePanel.setVisible(false);
+    
 
     
     boardPanel = new JPanel();
@@ -223,18 +233,18 @@ Color backgroundColor = boardPanel.getBackground();
         boardImg = new ImageIcon("board.png");
         
         goBackImg = new ImageIcon("GoBack (1).png");
-resetButton = new JButton(goBackImg);
-resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    resetButton.setVisible(true);
-    resetButton.setOpaque(true);
-    resetButton.setBounds(1150, 5, 100, 100);
+_1v1resetButton = new JButton(goBackImg);
+_1v1resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    _1v1resetButton.setVisible(true);
+    _1v1resetButton.setOpaque(true);
+    _1v1resetButton.setBounds(1150, 5, 100, 100);
 
 homeImg = new ImageIcon("homeIcon (1).png");
-homeButton = new JButton(homeImg);
-homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    homeButton.setVisible(true);
-    homeButton.setOpaque(true);
-    homeButton.setBounds(1050, 5, 100, 100);
+_1v1homeButton = new JButton(homeImg);
+_1v1homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    _1v1homeButton.setVisible(true);
+    _1v1homeButton.setOpaque(true);
+    _1v1homeButton.setBounds(1050, 5, 100, 100);
 
         boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
         boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
@@ -243,14 +253,14 @@ homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         boardPanel.add(boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
-        boardPanel.add(resetButton); 
-        boardPanel.add(homeButton);
-setUpBoardButtons(); 
+        boardPanel.add(_1v1resetButton); 
+        boardPanel.add(_1v1homeButton);
+        setUpBoardButtons(); 
 
 
     
 
-       resetButton.addActionListener(new ActionListener() {
+       _1v1resetButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Go Back Button clicked!");
@@ -264,8 +274,8 @@ gameOver = false;
              boardPanel.revalidate();  
             boardPanel.repaint(); 
             setUpBoardButtons();
-            boardPanel.add(resetButton); 
-        boardPanel.add(homeButton);
+            boardPanel.add(_1v1resetButton); 
+        boardPanel.add(_1v1homeButton);
         boardPanel.add(boardPlacement);
         boardPanel.revalidate();  
             boardPanel.repaint(); 
@@ -277,7 +287,7 @@ gameOver = false;
         }
       });
 
-      homeButton.addActionListener(new ActionListener() {
+      _1v1homeButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Home Button clicked!");
@@ -285,14 +295,21 @@ gameOver = false;
            for (int i = 0; i < board.length; i++) {
     for (int j = 0; j < board[i].length; j++) {
         board[i][j] = emptyPieceNum;
+
+        
     }
+
+    gameContainer.setVisible(false);
+
+        introPanel.setVisible(true);
+        buttonPanel.setVisible(true);
 }
 gameOver = false; 
              boardPanel.revalidate();  
             boardPanel.repaint(); 
             setUpBoardButtons();
-            boardPanel.add(resetButton); 
-        boardPanel.add(homeButton);
+            boardPanel.add(_1v1resetButton); 
+        boardPanel.add(_1v1homeButton);
         boardPanel.add(boardPlacement);
         boardPanel.revalidate();  
             boardPanel.repaint(); 
@@ -444,6 +461,25 @@ public void winningPieceFlourish() {
         aigamePanel.setBackground(Color.WHITE);
       
         
+      goBackImg = new ImageIcon("GoBack (1).png");
+_AIresetButton = new JButton(goBackImg);
+_AIresetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    _AIresetButton.setVisible(true);
+    _AIresetButton.setOpaque(true);
+    _AIresetButton.setBounds(1150, 5, 100, 100);
+
+homeImg = new ImageIcon("homeIcon (1).png");
+_AIhomeButton = new JButton(homeImg);
+_AIhomeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    _AIhomeButton.setVisible(true);
+    _AIhomeButton.setOpaque(true);
+    _AIhomeButton.setBounds(1050, 5, 100, 100);
+
+
+    aigamePanel.add(_AIresetButton);
+aigamePanel.add(_AIhomeButton);
+
+
         ImageIcon boardImg = new ImageIcon("board.png");
         
 
@@ -480,10 +516,10 @@ public void winningPieceFlourish() {
             System.out.println("Button clicked!");
         }
       });
-
-      aigamePanel.add(aiboardButtons);
+      }
     }
-  }
+
+
   
   // Setting up the intro panel
   public void setUpIntroPanel() {
@@ -554,16 +590,16 @@ public void winningPieceFlourish() {
     singlePlayerButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent evt) {
-       introPanel.setVisible(false);
-          buttonPanel.setVisible(false);
-<<<<<<< HEAD
-          _1vAIgamePanel.setVisible(true);
-          _1v1gamePanel.setVisible(false);
-=======
-          _1v1gamePanel.setVisible(true);
-          boardPanel.setVisible(true);
-          
->>>>>>> 33f5edec6063e4d61a14f19bf8012125f97a47c3
+         introPanel.setVisible(false);
+        buttonPanel.setVisible(false);
+        boardPanel.setVisible(true);
+       
+        
+
+        gameContainer.setVisible(true);
+
+        CardLayout cl = (CardLayout) gameContainer.getLayout();
+        cl.show(gameContainer, "AI");
           
       }
     });
@@ -572,14 +608,13 @@ public void winningPieceFlourish() {
       @Override
       public void actionPerformed(ActionEvent evt) {
        introPanel.setVisible(false);
-          buttonPanel.setVisible(false);
-          _1v1gamePanel.setVisible(true);
-<<<<<<< HEAD
-          _1vAIgamePanel.setVisible(false);
-=======
-          boardPanel.setVisible(true);
->>>>>>> 33f5edec6063e4d61a14f19bf8012125f97a47c3
+        buttonPanel.setVisible(false);
+        boardPanel.setVisible(true);
 
+        gameContainer.setVisible(true);
+
+        CardLayout cl = (CardLayout) gameContainer.getLayout();
+        cl.show(gameContainer, "1V1");
       }
     });
 

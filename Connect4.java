@@ -42,7 +42,8 @@ public class Connect4 {
   JPanel boardPanel; 
   JPanel aigamePanel;
   ImageIcon boardImg;
-  JLabel boardPlacement;
+  JLabel _1v1boardPlacement;
+  JLabel _AIboardPlacement;
   JLabel instructionLabel; 
   JPanel gameContainer;
   int getHeight = 0;
@@ -246,11 +247,11 @@ _1v1homeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     _1v1homeButton.setOpaque(true);
     _1v1homeButton.setBounds(1050, 5, 100, 100);
 
-        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
-        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
-        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
-        boardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
-        boardPanel.add(boardPlacement);
+        _1v1boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        _1v1boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
+        _1v1boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
+        _1v1boardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
+        boardPanel.add(_1v1boardPlacement);
         _1v1gamePanel.add(boardPanel, BorderLayout.CENTER);
         _1v1gamePanel.add(instructionLabel, BorderLayout.PAGE_START);
         boardPanel.add(_1v1resetButton); 
@@ -276,7 +277,7 @@ gameOver = false;
             setUpBoardButtons();
             boardPanel.add(_1v1resetButton); 
         boardPanel.add(_1v1homeButton);
-        boardPanel.add(boardPlacement);
+        boardPanel.add(_1v1boardPlacement);
         boardPanel.revalidate();  
             boardPanel.repaint(); 
 
@@ -310,7 +311,7 @@ gameOver = false;
             setUpBoardButtons();
             boardPanel.add(_1v1resetButton); 
         boardPanel.add(_1v1homeButton);
-        boardPanel.add(boardPlacement);
+        boardPanel.add(_1v1boardPlacement);
         boardPanel.revalidate();  
             boardPanel.repaint(); 
             _1v1gamePanel.setVisible(false);
@@ -476,9 +477,6 @@ _AIhomeButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     _AIhomeButton.setBounds(1050, 5, 100, 100);
 
 
-    
-
-
     aigamePanel.add(_AIresetButton);
 aigamePanel.add(_AIhomeButton);
 
@@ -486,11 +484,11 @@ aigamePanel.add(_AIhomeButton);
         ImageIcon boardImg = new ImageIcon("board.png");
         
 
-        boardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
-        boardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
-        boardPlacement.setVerticalAlignment(SwingConstants.CENTER);
-        boardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
-        aigamePanel.add(boardPlacement);
+        _AIboardPlacement = new JLabel(boardImg, SwingConstants.CENTER);
+        _AIboardPlacement.setHorizontalAlignment(SwingConstants.CENTER);
+        _AIboardPlacement.setVerticalAlignment(SwingConstants.CENTER);
+        _AIboardPlacement.setBounds((1300 - boardImg.getIconWidth()) / 2, (1000 - boardImg.getIconHeight()) /2, boardImg.getIconWidth(), boardImg.getIconHeight());
+        aigamePanel.add(_AIboardPlacement);
 
 
         _1vAIgamePanel.add(aigamePanel, BorderLayout.CENTER);
@@ -510,68 +508,42 @@ aigamePanel.add(_AIhomeButton);
       aiboardButtons.setOpaque(false);
       aiboardButtons.setContentAreaFilled(false);
       aiboardButtons.setBorderPainted(false);
-      
       aigamePanel.add(aiboardButtons);
+      
 
       aiboardButtons.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Button clicked!");
+
         }
       });
       }
 
 
-      _AIresetButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+      _AIhomeButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        gameContainer.setVisible(false);
+        introPanel.setVisible(true);
+        buttonPanel.setVisible(true);
+    }
+});
 
-            System.out.println("AI Reset clicked!");
+_AIresetButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Reset clicked");
+    }
+});
 
-            aigamePanel.removeAll();
-
-            for (int r = 0; r < board.length; r++) {
-                for (int c = 0; c < board[r].length; c++) {
-                    board[r][c] = emptyPieceNum;
-                    chipLabels[r][c] = null;
-                }
-            }
-
-            gameOver = false; 
-             aigamePanel.revalidate();  
-            aigamePanel.repaint(); 
-            aigamePanel.add(_AIresetButton); 
-        aigamePanel.add(_AIhomeButton);
-        aigamePanel.add(boardPlacement);
-        aigamePanel.revalidate();  
-            aigamePanel.repaint(); 
-
-
-          
-        }
-    });
-
-    _AIhomeButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            System.out.println("AI Home clicked!");
-
-            for (int r = 0; r < board.length; r++) {
-                for (int c = 0; c < board[r].length; c++) {
-                    board[r][c] = emptyPieceNum;
-                    chipLabels[r][c] = null;
-                }
-            }
-
-        }
-    });
-}
+    }
 
 
 
 
 
+  
   // Setting up the intro panel
   public void setUpIntroPanel() {
     introPanel = new JPanel(new BorderLayout());
@@ -681,10 +653,6 @@ aigamePanel.add(_AIhomeButton);
   }
 
 
-
-
-  
-
   public static void main(String[] args) {
     new Connect4();
   }
@@ -692,3 +660,4 @@ aigamePanel.add(_AIhomeButton);
 }
     
     
+//For Ben. For Kiyan. 

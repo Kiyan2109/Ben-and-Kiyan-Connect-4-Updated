@@ -395,6 +395,41 @@ gameOver = false;
       }
 
 
+      public int findWinningMove(int player) {
+
+    for (int col = 0; col < 7; col++) {
+
+        
+        if (board[0][col] != emptyPieceNum) {
+            continue;
+        }
+
+        int testRow = -1;
+
+        
+        for (int r = 5; r >= 0; r--) {
+            if (board[r][col] == emptyPieceNum) {
+                testRow = r;
+                break;
+            }
+        }
+
+        
+        board[testRow][col] = player;
+
+        boolean winningMove = checkForWin(player);
+
+        
+        board[testRow][col] = emptyPieceNum;
+
+        if (winningMove) {
+            return col;
+        }
+    }
+
+    return -1;
+}
+
 
 
 
@@ -493,53 +528,195 @@ aigamePanel.add(_AIhomeButton);
 
         _1vAIgamePanel.add(aigamePanel, BorderLayout.CENTER);
         _1vAIgamePanel.add(instructionLabel, BorderLayout.PAGE_START);
+        setUpAIBoardButtons();
 
+  }
+        
+        public void setUpAIBoardButtons() {
+
+    for (int i = 0; i < 7; i++) {
+
+        final int column = i;
+
+        JButton aiboardButtons = new JButton("");
+
+        aiboardButtons.setBounds(175 + (i * 135), 195, 135, 610);
+
+        aiboardButtons.setOpaque(false);
+        aiboardButtons.setContentAreaFilled(false);
+        aiboardButtons.setBorderPainted(false);
+
+        aigamePanel.add(aiboardButtons);
+
+        aiboardButtons.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (gameOver) 
+        return;
+
+        int row = -1;
+
+        for (int r = 5; r >= 0; r--) {
+            if (board[r][column] == emptyPieceNum) {
+                row = r;
+                break;
+            }
+        }
+
+        if (row == -1) return;
+
+        redPiece = new ImageIcon("RedPiece-Photoroom.png");
+
+        JLabel playerChip = new JLabel(redPiece, SwingConstants.CENTER);
+
+        playerChip.setBounds(175 + (column * 135),197 + (row * 99), 135, 100);
+
+        chipLabels[row][column] = playerChip;
+
+        board[row][column] = redPieceNum;
+
+        aigamePanel.add(playerChip);
+
+        aigamePanel.repaint();
 
         
-
-
-      for (int i = 0; i < 7; i++) {
-
-      JButton aiboardButtons = new JButton("");
-
-      aiboardButtons.setBounds(175 + (i * 135), 195, 135, 610);
-  
-
-      aiboardButtons.setOpaque(false);
-      aiboardButtons.setContentAreaFilled(false);
-      aiboardButtons.setBorderPainted(false);
-      aigamePanel.add(aiboardButtons);
-      
-
-      aiboardButtons.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Button clicked!");
-
+        if (checkForWin(redPieceNum)) {
+            System.out.println("Player wins!");
+            winningPieceFlourish();
+            gameOver = true;
+            return;
         }
-      });
-      }
 
+        
+        makeAIMove();
+    }
+});
+    }
+
+      
 
       _AIhomeButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        
+        aigamePanel.removeAll();
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+
+                board[i][j] = emptyPieceNum;
+                chipLabels[i][j] = null;
+            }
+        }
+
+        gameOver = false;
+        redTurn = true;
+
+        
+        aigamePanel.add(_AIresetButton);
+        aigamePanel.add(_AIhomeButton);
+        aigamePanel.add(_AIboardPlacement);
+
+        setUpAIBoardButtons();
+
+        aigamePanel.revalidate();
+        aigamePanel.repaint();
+
+        
         gameContainer.setVisible(false);
         introPanel.setVisible(true);
         buttonPanel.setVisible(true);
     }
 });
+  
+
 
 _AIresetButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Reset clicked");
+
+        aigamePanel.removeAll();
+
+        
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                board[i][j] = emptyPieceNum;
+                chipLabels[i][j] = null;
+            }
+        }
+
+        gameOver = false;
+
+        
+        aigamePanel.add(_AIresetButton);
+        aigamePanel.add(_AIhomeButton);
+        aigamePanel.add(_AIboardPlacement);
+
+        
+        setUpAIBoardButtons();
+
+        aigamePanel.revalidate();
+        aigamePanel.repaint();
     }
 });
+      
 
+}
+
+public void makeAIMove() {
+int aiColumn;
+
+
+aiColumn = findWinningMove(yellowPieceNum);
+
+
+if (aiColumn == -1) {
+    aiColumn = findWinningMove(redPieceNum);
+}
+
+
+if (aiColumn == -1) {
+
+    do {
+        aiColumn = (int)(Math.random() * 7);
+    } while (board[0][aiColumn] != emptyPieceNum);
+}
+
+    int aiRow = -1;
+
+    
+    for (int r = 5; r >= 0; r--) {
+        if (board[r][aiColumn] == emptyPieceNum) {
+            aiRow = r;
+            break;
+        }
     }
 
+   
+    yellowPiece = new ImageIcon("YellowPiece-Photoroom.png");
 
+    JLabel aiChip = new JLabel(yellowPiece, SwingConstants.CENTER);
+
+    aiChip.setBounds(175 + (aiColumn * 135),197 + (aiRow * 99),135,100);
+    
+
+    chipLabels[aiRow][aiColumn] = aiChip;
+
+    board[aiRow][aiColumn] = yellowPieceNum;
+
+    aigamePanel.add(aiChip);
+
+    aigamePanel.repaint();
+
+    
+    if (checkForWin(yellowPieceNum)) {
+        System.out.println("AI wins!");
+        winningPieceFlourish();
+        gameOver = true;
+    }
+}
 
 
 

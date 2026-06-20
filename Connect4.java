@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import java.util.TimerTask; 
 
 public class Connect4 {
 //Components of the window
@@ -67,6 +68,7 @@ final int emptyPieceNum = 0;
 int[][] winningCells = new int[4][2];
 JLabel[][] chipLabels = new JLabel[6][7];
 boolean gameOver = false;
+boolean aiThinking = false;
 
 
 //The classes main constructor method
@@ -267,7 +269,7 @@ setUpBoardButtons();
            
         }
       });
-  //Action listner for 1v1 home button, goes back to main menu and can go back and forth seamlessly. 
+  //Action listener for 1v1 home button, goes back to main menu and can go back and forth seamlessly. 
   _1v1homeButton.addActionListener(new ActionListener() {
         @Override
   public void actionPerformed(ActionEvent e) {
@@ -467,39 +469,38 @@ public void setUpAIBoardButtons() {
 
   for (int i = 0; i < 7; i++) {
 
-  final int column = i;
+    final int column = i;
 
-  JButton aiboardButtons = new JButton("");
+    JButton aiboardButtons = new JButton("");
 
-  aiboardButtons.setBounds(175 + (i * 135), 195, 135, 610);
-  aiboardButtons.setOpaque(false);
-  aiboardButtons.setContentAreaFilled(false);
-  aiboardButtons.setBorderPainted(false);
+    aiboardButtons.setBounds(175 + (i * 135), 195, 135, 610);
+    aiboardButtons.setOpaque(false);
+    aiboardButtons.setContentAreaFilled(false);
+    aiboardButtons.setBorderPainted(false);
 
-  aigamePanel.add(aiboardButtons);
-
-  //Action listener for AI Board Buttons which places the red chip and cues the AI move. 
     aiboardButtons.addActionListener(new ActionListener() {
-        @Override
-    public void actionPerformed(ActionEvent e) {
+      @Override
+      public void actionPerformed(ActionEvent e) {
 
-      if (gameOver) 
-      return;
-      int row = -1;
+        if (gameOver || aiThinking)
+          return;
+
+        int row = -1;
 
         for (int r = 5; r >= 0; r--) {
           if (board[r][column] == emptyPieceNum) {
-          row = r;
-          break;
-            }
+            row = r;
+            break;
+          }
         }
 
         if (row == -1) return;
+
         redPiece = new ImageIcon("RedPiece-Photoroom.png");
 
         JLabel playerChip = new JLabel(redPiece, SwingConstants.CENTER);
 
-        playerChip.setBounds(175 + (column * 135),197 + (row * 99), 135, 100);
+        playerChip.setBounds(175 + (column * 135), 197 + (row * 99), 135, 100);
 
         chipLabels[row][column] = playerChip;
 
@@ -509,21 +510,23 @@ public void setUpAIBoardButtons() {
 
         aigamePanel.repaint();
 
-        
-          if (checkForWin(redPieceNum)) {
+        if (checkForWin(redPieceNum)) {
           System.out.println("Player wins!");
           winningPieceFlourish();
           gameOver = true;
           return;
         }
 
-        
-    makeAIMove();
-    }
-});
-    }
+        aiThinking = true;
+        makeAIMove();
+      }
+    });
 
-      
+    aigamePanel.add(aiboardButtons);
+  }
+
+
+
   //Action Listener that is very similar to 1v1HomeButton. 
   _AIhomeButton.addActionListener(new ActionListener() {
     @Override
@@ -556,7 +559,8 @@ public void setUpAIBoardButtons() {
     introPanel.setVisible(true);
     buttonPanel.setVisible(true);
     }
-});
+  });
+
   
 
 //Reset Button action listener for AI, works same as 1v1. 
@@ -587,13 +591,15 @@ public void setUpAIBoardButtons() {
     aigamePanel.revalidate();
     aigamePanel.repaint();
     }
-});
-      
+  });
 
 }
-
 //Code that makes the AI move, consists of if statements that randomly place chips until three in a row is sensed and it can block or win the game for itself. 
+
 public void makeAIMove() {
+//Adds a move delay to the AI pieces dropping
+Timer moveDelay = new Timer(1000, null);
+moveDelay.addActionListener(e -> {
 int aiColumn;
 aiColumn = findWinningMove(yellowPieceNum);
 
@@ -637,10 +643,17 @@ aigamePanel.repaint();
 
     
   if (checkForWin(yellowPieceNum)) {
-  System.out.println("AI wins!");
-  winningPieceFlourish();
-  gameOver = true;
+    System.out.println("AI wins!");
+    winningPieceFlourish();
+    gameOver = true;
     }
+
+aiThinking = false;
+
+  });
+moveDelay.setRepeats(false);
+moveDelay.start();
+
 }
 
 
